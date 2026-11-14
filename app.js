@@ -1050,7 +1050,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 9. QR 複製網址與提示氣泡
+  // 9. QR 複製網址與二維條碼點擊放大燈箱 (Lightbox Modal)
   // ==========================================
   function showCopyToast(msg) {
     const toast = document.getElementById('copyToast');
@@ -1091,6 +1091,95 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // --- 二維條碼點圖放大燈箱邏輯 ---
+  const qrLightboxModal = document.getElementById('qrLightboxModal');
+  const qrLightboxImg = document.getElementById('qrLightboxImg');
+  const qrLightboxTitle = document.getElementById('qrLightboxTitle');
+  const qrLightboxSub = document.getElementById('qrLightboxSub');
+  const qrLightboxUrlBox = document.getElementById('qrLightboxUrlBox');
+  const qrLightboxDownload = document.getElementById('qrLightboxDownload');
+  const qrLightboxClose = document.getElementById('qrLightboxClose');
+  const qrLightboxCloseBtn = document.getElementById('qrLightboxCloseBtn');
+  const qrLightboxBackdrop = document.getElementById('qrLightboxBackdrop');
+  const qrLightboxCopyUrl = document.getElementById('qrLightboxCopyUrl');
+
+  let currentModalUrl = 'https://yaoshuchin.github.io/1151114-yuchi-elderly-digital/';
+
+  function openQrLightbox(type) {
+    if (!qrLightboxModal || !qrLightboxImg) return;
+    if (type === 'tiny') {
+      currentModalUrl = 'https://tinyurl.com/22qbsl3w';
+      qrLightboxImg.src = 'qrcode_tinyurl.png';
+      if (qrLightboxTitle) qrLightboxTitle.textContent = '極簡縮網址條碼放大';
+      if (qrLightboxSub) qrLightboxSub.textContent = '推薦快速口頭宣導・手機相機對準條碼立即直達';
+      if (qrLightboxUrlBox) qrLightboxUrlBox.textContent = currentModalUrl;
+      if (qrLightboxDownload) {
+        qrLightboxDownload.href = 'qrcode_tinyurl.png';
+        qrLightboxDownload.download = '魚池數位中心_縮網址_QRCode_高清放大.png';
+      }
+    } else {
+      currentModalUrl = 'https://yaoshuchin.github.io/1151114-yuchi-elderly-digital/';
+      qrLightboxImg.src = 'qrcode.png';
+      if (qrLightboxTitle) qrLightboxTitle.textContent = '官方完整網址條碼放大';
+      if (qrLightboxSub) qrLightboxSub.textContent = '南投縣樂齡學習數位示範體驗場域（魚池）公開成果展示';
+      if (qrLightboxUrlBox) qrLightboxUrlBox.textContent = currentModalUrl;
+      if (qrLightboxDownload) {
+        qrLightboxDownload.href = 'qrcode.png';
+        qrLightboxDownload.download = '魚池數位中心_官方網頁_QRCode_高清放大.png';
+      }
+    }
+    qrLightboxModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeQrLightbox() {
+    if (!qrLightboxModal) return;
+    qrLightboxModal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  const qrFrameMain = document.getElementById('qrFrameMain');
+  if (qrFrameMain) {
+    qrFrameMain.addEventListener('click', () => openQrLightbox('main'));
+  }
+  const qrImgMain = document.getElementById('qrImgMain');
+  if (qrImgMain && !qrFrameMain) {
+    qrImgMain.addEventListener('click', () => openQrLightbox('main'));
+  }
+
+  const qrFrameTiny = document.getElementById('qrFrameTiny');
+  if (qrFrameTiny) {
+    qrFrameTiny.addEventListener('click', () => openQrLightbox('tiny'));
+  }
+  const qrImgTiny = document.getElementById('qrImgTiny');
+  if (qrImgTiny && !qrFrameTiny) {
+    qrImgTiny.addEventListener('click', () => openQrLightbox('tiny'));
+  }
+
+  if (qrLightboxClose) qrLightboxClose.addEventListener('click', closeQrLightbox);
+  if (qrLightboxCloseBtn) qrLightboxCloseBtn.addEventListener('click', closeQrLightbox);
+  if (qrLightboxBackdrop) qrLightboxBackdrop.addEventListener('click', closeQrLightbox);
+
+  if (qrLightboxCopyUrl) {
+    qrLightboxCopyUrl.addEventListener('click', () => {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(currentModalUrl).then(() => {
+          showCopyToast('✅ 網址已成功複製到剪貼簿！');
+        }).catch(() => {
+          prompt('請手動複製網址：', currentModalUrl);
+        });
+      } else {
+        prompt('請手動複製網址：', currentModalUrl);
+      }
+    });
+  }
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && qrLightboxModal && qrLightboxModal.classList.contains('active')) {
+      closeQrLightbox();
+    }
+  });
 
   // ==========================================
   // 10. 初始化啟動

@@ -882,8 +882,9 @@
               手機相機或 LINE 掃描器對準即可直接開啟
             </div>
 
-            <div class="qr-image-frame">
+            <div class="qr-image-frame qr-zoomable" id="qrFrameMain" title="點擊放大二維條碼" data-qr-type="main">
               <img src="qrcode.png" alt="魚池樂齡數位示範場域 QR Code" class="qr-code-img" id="qrImgMain" />
+              <div class="qr-zoom-badge">🔍 點擊放大條碼</div>
             </div>
 
             <div class="qr-url-badge-box" title="完整公開網址">
@@ -919,8 +920,9 @@
               <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">（可直接鍵入 tinyurl.com/22qbsl3w）</div>
             </div>
 
-            <div class="qr-image-frame" style="padding:0.6rem;">
-              <img src="qrcode_tinyurl.png" alt="縮網址 QR Code" style="width:140px; height:140px; display:block;" />
+            <div class="qr-image-frame qr-zoomable" id="qrFrameTiny" style="padding:0.6rem;" title="點擊放大二維條碼" data-qr-type="tiny">
+              <img src="qrcode_tinyurl.png" alt="縮網址 QR Code" id="qrImgTiny" style="width:140px; height:140px; display:block;" />
+              <div class="qr-zoom-badge">🔍 點擊放大條碼</div>
             </div>
 
             <div class="qr-actions-row">
@@ -999,6 +1001,43 @@
   <!-- 引用數據檔與核心邏輯 -->
   <script src="slides_data.js"></script>
   <script src="app.js"></script>
+  <!-- 二維條碼點擊放大燈箱 (QR Code Lightbox Modal) -->
+  <div id="qrLightboxModal" class="qr-lightbox-modal" role="dialog" aria-modal="true" aria-label="放大檢視二維條碼">
+    <div class="qr-lightbox-backdrop" id="qrLightboxBackdrop"></div>
+    <div class="qr-lightbox-content">
+      <button class="qr-lightbox-close" id="qrLightboxClose" title="關閉放大視窗 (Esc)" aria-label="關閉視窗">✕</button>
+      <div class="qr-lightbox-header">
+        <span class="qr-lightbox-icon">📱</span>
+        <div>
+          <h3 id="qrLightboxTitle" class="qr-lightbox-title">二維條碼放大檢視</h3>
+          <p id="qrLightboxSub" class="qr-lightbox-sub">南投縣樂齡學習數位示範體驗場域（魚池）</p>
+        </div>
+      </div>
+      <div class="qr-lightbox-body">
+        <div class="qr-lightbox-img-wrap">
+          <img id="qrLightboxImg" src="qrcode.png" alt="放大二維條碼" />
+        </div>
+        <div class="qr-lightbox-url-box" id="qrLightboxUrlBox">
+          https://yaoshuchin.github.io/1151114-yuchi-elderly-digital/
+        </div>
+        <div class="qr-lightbox-tip">
+          📷 請直接使用手機相機或 LINE 掃描器對準螢幕放大之條碼即可立即瀏覽
+        </div>
+        <div class="qr-lightbox-actions">
+          <a id="qrLightboxDownload" href="qrcode.png" download="魚池數位中心_QRCode_高清放大.png" class="btn-qr-action secondary">
+            📥 下載高清條碼
+          </a>
+          <button id="qrLightboxCopyUrl" class="btn-qr-action secondary">
+            📋 複製網址
+          </button>
+          <button id="qrLightboxCloseBtn" class="btn-qr-action">
+            關閉視窗
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 複製成功提示氣泡 -->
   <div class="copy-toast" id="copyToast">✅ 網址已成功複製到剪貼簿！</div>
 
