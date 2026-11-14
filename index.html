@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>教育部南投縣樂齡學習數位示範體驗場域（魚池）- 第二次訪視輔導簡報網頁化展示系統</title>
+  <meta name="description" content="教育部南投縣樂齡學習數位示範體驗場域（魚池）第二次訪視輔導成果展示、訪視問答與線上簡報系統">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- ================= 門禁密碼驗證遮罩 (密碼: 049) ================= -->
+  <div id="auth-overlay">
+    <div class="auth-box" id="authBox">
+      <div class="auth-lock-icon">🔒</div>
+      <h2 class="auth-title">南投縣樂齡學習數位示範場域</h2>
+      <div class="auth-subtitle">教育部第二次訪視輔導成果展示系統<br>請輸入訪問通行密碼</div>
+      <form id="authForm" class="auth-form" onsubmit="handleAuthSubmit(event)">
+        <div class="auth-input-wrapper">
+          <input type="password" id="authPasswordInput" class="auth-input" placeholder="請輸入密碼" maxlength="10" autofocus autocomplete="off">
+        </div>
+        <button type="submit" class="auth-submit-btn">驗證並進入系統 ➔</button>
+        <div id="authErrorMsg" class="auth-error-msg">⚠️ 密碼錯誤，請重新輸入！</div>
+      </form>
+      <div style="margin-top: 1.25rem; font-size: 0.8rem; color: #94a3b8;">
+        南投在地通行驗證
+      </div>
+    </div>
+  </div>
+
+
+  <!-- ================= 頂部全域導覽列 ================= -->
+  <header class="site-header">
+    <div class="header-container">
+      <!-- 品牌標誌與標題 -->
+      <div class="brand-wrapper" id="brandLogoNav" title="點擊返回成果首頁">
+        <div class="brand-logo-badge">樂</div>
+        <div class="brand-text-block">
+          <h1>南投縣樂齡學習數位示範體驗場域（魚池）</h1>
+          <div class="sub-title">教育部訪視輔導・成果網頁化展示系統</div>
+        </div>
+      </div>
+
+      <!-- 三大核心功能模式切換鈕 -->
+      <nav class="mode-nav-tabs" role="tablist">
+        <button class="mode-tab-btn active" data-mode="modeA" role="tab" id="tabModeA">
+          <span>🌟 A. 成果網頁</span>
+          <span class="badge-pill">亮點總覽</span>
+        </button>
+        <button class="mode-tab-btn" data-mode="modeB" role="tab" id="tabModeB">
+          <span>🎯 B. 問答模式</span>
+          <span class="badge-pill">委員考題</span>
+        </button>
+        <button class="mode-tab-btn" data-mode="modeC" role="tab" id="tabModeC">
+          <span>📽️ C. 簡報模式</span>
+          <span class="badge-pill">25頁全景</span>
+        </button>
+      </nav>
+
+      <!-- 樂齡輔助工具 -->
+      <div class="header-tools">
+        <button class="lock-nav-btn" id="lockNavBtn" title="重新鎖定系統（需輸入密碼 049）">
+          🔒 鎖定
+        </button>
+        <button class="tool-btn" id="fontToggleBtn" title="調整網頁文字大小（樂齡友善設計）">
+          🔍 字體：標準
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= 主內容區域 ================= -->
+  <main class="main-wrapper">
+
+    <!-- ========================================================
+         【A. 成果網頁 (Showcase Portal)】
+         ======================================================== -->
+    <section id="view-modeA" class="view-section active">
+      
+      <!-- 主形象橫幅 (Hero Banner) -->
+      <div class="hero-banner">
+        <div class="hero-tag">✨ 教育部南投縣樂齡學習數位示範體驗場域（魚池）</div>
+        <h1 class="hero-title">從魚池樂齡出發，讓數位學習走進生活</h1>
+        <p class="hero-subtitle">
+          「阿嬤，我們陪您慢慢學，手把手學手機！」結合三育高中青年小幫手與在地樂齡大幫手，跨世代共學，讓科技更有溫度，真正實現科技樂齡、幸福南投。
+        </p>
+        <div class="hero-meta-row">
+          <div class="hero-meta-item">
+            <strong>執行單位：</strong>南投縣樂齡教育文化發展協會
+          </div>
+          <div class="hero-meta-item">
+            <strong>簡報人：</strong>陳足女 常務監事
+          </div>
+          <div class="hero-meta-item">
+            <strong>專案管理：</strong>王于萍 專案管理員
+          </div>
+          <div class="hero-meta-item" style="margin-left: auto;">
+            <button class="jump-slide-btn" style="background:#fff; color:var(--primary); font-weight:700; border:none; padding:0.5rem 1rem;" onclick="window.jumpToSlide(1)">
+              ▶ 立即啟動簡報放映 (第 1 頁)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 核心關鍵成效數據 (KPI Grid) -->
+      <div class="kpi-grid">
+        <div class="kpi-card accent-emerald">
+          <div class="kpi-label">課程總時數達成率</div>
+          <div class="kpi-value-row">
+            <span class="kpi-number">90.0</span>
+            <span class="kpi-unit">%</span>
+          </div>
+          <div class="kpi-subtext">規劃 120 小時，已完成 108 小時（數位學習 87.1% / 訓練 100%）</div>
+        </div>
+
+        <div class="kpi-card accent-orange">
+          <div class="kpi-label">數位幫手諮詢人次</div>
+          <div class="kpi-value-row">
+            <span class="kpi-number">366</span>
+            <span class="kpi-unit">人次</span>
+          </div>
+          <div class="kpi-subtext">每週二固定諮詢，已累計 19 筆時段、57.3 小時深度陪伴</div>
+        </div>
+
+        <div class="kpi-card accent-blue">
+          <div class="kpi-label">學員整體滿意度</div>
+          <div class="kpi-value-row">
+            <span class="kpi-number">4.94</span>
+            <span class="kpi-unit">/ 5.0</span>
+          </div>
+          <div class="kpi-subtext">回收 113 份問卷，五大服務面向滿意度皆達 4.90 以上</div>
+        </div>
+
+        <div class="kpi-card accent-purple">
+          <div class="kpi-label">社區拓點與擴散</div>
+          <div class="kpi-value-row">
+            <span class="kpi-number">8</span>
+            <span class="kpi-unit">處據點</span>
+          </div>
+          <div class="kpi-subtext">深入魚池各村里長照與國小，學員外溢涵蓋南投 6 大鄉鎮</div>
+        </div>
+      </div>
+
+      <!-- 四大核心維度成果區塊 -->
+      <div class="section-header">
+        <div>
+          <h2>四大執行支柱與推動成果</h2>
+          <div class="sub-desc">教育部示範場域四大核心維度完整建置與落地實踐</div>
+        </div>
+        <div>
+          <button class="jump-slide-btn" onclick="window.switchMode('modeB')">
+            💡 前往訪視委員問答重點 ➔
+          </button>
+        </div>
+      </div>
+
+      <div class="dimensions-grid">
+        <!-- 面向一：空間設備 -->
+        <div class="dimension-card">
+          <div class="dimension-card-header">
+            <div class="dimension-card-title">🏢 空間設備：友善安全與智慧升級</div>
+            <span class="badge-pill" style="background:#e0f2fe; color:#0369a1; padding:3px 8px; border-radius:999px; font-size:0.75rem; font-weight:700;">第 7–9 頁</span>
+          </div>
+          <div class="dimension-card-body">
+            <ul class="feature-list">
+              <li><span class="check-icon">✓</span> <strong>三大分區完備：</strong>教學區（智慧互動黑板）、諮詢區（個別解答）、體驗區（手機平板電腦自主摸索）。</li>
+              <li><span class="check-icon">✓</span> <strong>樂齡安全動線：</strong>配置消防栓、警報裝置、樓梯扶手與清晰逃生指標，落實安全檢核。</li>
+              <li><span class="check-icon">✓</span> <strong>高速無線網絡：</strong>建置高速 Wi-Fi 支援多設備連線，並設立學員休閒討論區。</li>
+            </ul>
+          </div>
+          <div class="dimension-card-footer">
+            <span style="font-size:0.85rem; color:var(--text-muted);">設備全數驗收並投入教學</span>
+            <button class="jump-slide-btn" data-slide="7">查看空間簡報 P.7 ➔</button>
+          </div>
+        </div>
+
+        <!-- 面向二：人力制度 -->
+        <div class="dimension-card">
+          <div class="dimension-card-header">
+            <div class="dimension-card-title">👥 人力制度：青銀共學與專業師資</div>
+            <span class="badge-pill" style="background:#fef3c7; color:#b45309; padding:3px 8px; border-radius:999px; font-size:0.75rem; font-weight:700;">第 11–13 頁</span>
+          </div>
+          <div class="dimension-card-body">
+            <ul class="feature-list">
+              <li><span class="check-icon">✓</span> <strong>專案管理員到位：</strong>王于萍專管完成培訓，提供貼近長輩的「行動諮詢服務」。</li>
+              <li><span class="check-icon">✓</span> <strong>25位數位幫手：</strong>「樂齡大幫手 16 人」+ 三育高中「青年小幫手 9 人」，手把手帶領阿嬤跨越數位門檻。</li>
+              <li><span class="check-icon">✓</span> <strong>18位專業師資：</strong>嚴謹依規範聘任大學師資 (3位)、核心講師 (13位)、數位講師 (2位)。</li>
+            </ul>
+          </div>
+          <div class="dimension-card-footer">
+            <span style="font-size:0.85rem; color:var(--text-muted);">制度化聘任與跨世代陪伴</span>
+            <button class="jump-slide-btn" data-slide="12">查看幫手簡報 P.12 ➔</button>
+          </div>
+        </div>
+
+        <!-- 面向三：課程執行與諮詢 -->
+        <div class="dimension-card">
+          <div class="dimension-card-header">
+            <div class="dimension-card-title">📚 課程教學：學會比學完還重要</div>
+            <span class="badge-pill" style="background:#dcfce7; color:#15803d; padding:3px 8px; border-radius:999px; font-size:0.75rem; font-weight:700;">第 14–16 頁</span>
+          </div>
+          <div class="dimension-card-body">
+            <ul class="feature-list">
+              <li><span class="check-icon">✓</span> <strong>紮實課程進度：</strong>數位學習 15 門/93 小時（已成 81h，達成率 87.1%），教育訓練 4 門/27 小時全數結業。</li>
+              <li><span class="check-icon">✓</span> <strong>常態諮詢機制：</strong>每週二上午 9:00–12:00 開放，課後諮詢 130 人次、一對一 156 人次、電話/LINE 80 人次。</li>
+              <li><span class="check-icon">✓</span> <strong>4.94 高分回饋：</strong>親切度 4.96、內容 4.95、整體 4.94，落實「大字示範」與「生活情境化」教學。</li>
+            </ul>
+          </div>
+          <div class="dimension-card-footer">
+            <span style="font-size:0.85rem; color:var(--text-muted);">問卷 113 份・高滿意肯定</span>
+            <button class="jump-slide-btn" data-slide="14">查看課程簡報 P.14 ➔</button>
+          </div>
+        </div>
+
+        <!-- 面向四：推廣策略與跨界 -->
+        <div class="dimension-card">
+          <div class="dimension-card-header">
+            <div class="dimension-card-title">🤝 推廣策略：在地創生與企業跨界</div>
+            <span class="badge-pill" style="background:#f3e8ff; color:#6b21a8; padding:3px 8px; border-radius:999px; font-size:0.75rem; font-weight:700;">第 17–21 頁</span>
+          </div>
+          <div class="dimension-card-body">
+            <ul class="feature-list">
+              <li><span class="check-icon">✓</span> <strong>特色課程「大家來玩魚池」：</strong>串聯魚池在地紅茶、生態與觀光，以生活現場為數位學習教室。</li>
+              <li><span class="check-icon">✓</span> <strong>經典大飯店跨界：</strong>結合「微笑魚市集」設攤互動，並共同打造「樂齡數位遊程」新模式。</li>
+              <li><span class="check-icon">✓</span> <strong>校園與社區節慶：</strong>攜手三育基督學院於「魚池永續循環節」推展跨世代數位宣導。</li>
+            </ul>
+          </div>
+          <div class="dimension-card-footer">
+            <span style="font-size:0.85rem; color:var(--text-muted);">產官學攜手・地方共榮</span>
+            <button class="jump-slide-btn" data-slide="19">查看特色課程 P.19 ➔</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8 處社區拓點與 6 大鄉鎮參與分佈 -->
+      <div class="locations-container">
+        <div class="section-header" style="margin-bottom: 0.5rem;">
+          <div>
+            <h2>社區拓點與學員擴散成效</h2>
+            <div class="sub-desc">落實「在地深耕、區域示範」：深入魚池村里並外溢至南投各鄉鎮</div>
+          </div>
+          <button class="jump-slide-btn" data-slide="20">查看拓點簡報 P.20 ➔</button>
+        </div>
+
+        <p style="font-size:0.95rem; color:#475569; margin-top:0.5rem;">
+          場域已於魚池鄉成功拓展 <strong>8 處服務分班</strong>，讓長輩在熟悉的長照站與社區聚落就近操作數位工具：
+        </p>
+
+        <div class="location-badges-grid">
+          <div class="loc-badge"><span class="loc-num">1</span> 共和長照據點</div>
+          <div class="loc-badge"><span class="loc-num">2</span> 大林長照據點</div>
+          <div class="loc-badge"><span class="loc-num">3</span> 魚池尖社區發展協會</div>
+          <div class="loc-badge"><span class="loc-num">4</span> 經典大飯店合作據點</div>
+          <div class="loc-badge"><span class="loc-num">5</span> 中明社區活動中心</div>
+          <div class="loc-badge"><span class="loc-num">6</span> 新城社區活動中心</div>
+          <div class="loc-badge"><span class="loc-num">7</span> 明潭國小共學據點</div>
+          <div class="loc-badge"><span class="loc-num">8</span> 頭社羊角村活化據點</div>
+        </div>
+
+        <div class="towns-reach-bar">
+          <strong style="color:var(--text-main); font-size:0.95rem;">🚗 學員跨鄉鎮參與擴散（共 6 鄉鎮）：</strong>
+          <span class="town-tag">仁愛鄉</span>
+          <span class="town-tag">埔里鎮</span>
+          <span class="town-tag">國姓鄉</span>
+          <span class="town-tag">水里鄉</span>
+          <span class="town-tag">名間鄉</span>
+          <span class="town-tag">南投市</span>
+        </div>
+      </div>
+
+      <!-- 115年底成果補強與 116 年展望 -->
+      <div class="hero-banner" style="background: linear-gradient(135deg, #1e293b 0%, #0f766e 100%); margin-bottom: 2.5rem;">
+        <div class="hero-tag">🚀 永續前瞻規劃（第 22–24 頁）</div>
+        <h2 style="font-size: 1.8rem; font-weight:800; margin-bottom:0.75rem;">115 年底穩健補強 ➔ 116 年深化分級與自營</h2>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; margin-top:1.25rem;">
+          <div style="background:rgba(255,255,255,0.1); padding:1.25rem; border-radius:var(--radius-md); backdrop-filter:blur(4px);">
+            <h3 style="color:#fde047; font-size:1.1rem; margin-bottom:0.5rem;">115 年底查核補強重點</h3>
+            <p style="font-size:0.9rem; line-height:1.6; opacity:0.95;">
+              • 完善期初訪視建議對照表與查核佐證<br>
+              • 11/29 前完成剩餘 2 門 12 小時課程<br>
+              • 消防逃生圖資完善與無障礙動線補強
+            </p>
+          </div>
+          <div style="background:rgba(255,255,255,0.1); padding:1.25rem; border-radius:var(--radius-md); backdrop-filter:blur(4px);">
+            <h3 style="color:#a7f3d0; font-size:1.1rem; margin-bottom:0.5rem;">116 年深化執行規劃（核定123小時）</h3>
+            <p style="font-size:0.9rem; line-height:1.6; opacity:0.95;">
+              • <strong>99h 課程 + 24h 培訓：</strong>推動新手慢速生活班與進階應用班分級<br>
+              • <strong>青年固定駐點：</strong>三育高中幫手與資深樂齡學員互助機制<br>
+              • <strong>遊程自營評估：</strong>盤點經典大飯店數位遊程收益與可複製模組
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 25 頁簡報精選相簿快速瀏覽 -->
+      <div class="section-header">
+        <div>
+          <h2>完整 25 頁投影片快速預覽</h2>
+          <div class="sub-desc">點擊任意投影片縮圖，將立即切換至【簡報模式】並跳轉至該頁播放</div>
+        </div>
+        <button class="jump-slide-btn" onclick="window.switchMode('modeC')">
+          進入全螢幕播放 ➔
+        </button>
+      </div>
+
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- 由 JavaScript 動態注入 25 頁縮圖 -->
+      </div>
+
+    </section>
+
+
+    <!-- ========================================================
+         【B. 問答模式 (Q&A / Defense Mode)】
+         ======================================================== -->
+    <section id="view-modeB" class="view-section">
+
+      <!-- 問答頂部導引盒 -->
+      <div class="qa-header-box">
+        <h2>第二次訪視輔導・委員核心問答與提報題庫</h2>
+        <p class="qa-subtext">
+          針對教育部第二次訪視輔導評鑑焦點，整理 12 大高頻必考題、法規標準、亮點機制與滿分應答技巧，並提供「列表全覽」與「模擬考演練」雙模式。
+        </p>
+
+        <!-- 問答子模式切換按鈕 -->
+        <div class="qa-mode-switch-bar">
+          <button class="qa-mode-btn active" data-submode="list">
+            📖 題目清單模式 (全覽與關鍵字搜尋)
+          </button>
+          <button class="qa-mode-btn" data-submode="drill">
+            🎯 模擬考演練模式 (閃卡測試・揭曉要點)
+          </button>
+        </div>
+      </div>
+
+      <!-- 篩選標籤與關鍵字搜尋列 -->
+      <div class="qa-filter-bar">
+        <div class="qa-category-tags">
+          <button class="cat-filter-btn active" data-cat="all">全部題目 (12)</button>
+          <button class="cat-filter-btn" data-cat="空間設備">空間設備</button>
+          <button class="cat-filter-btn" data-cat="人力制度">人力制度</button>
+          <button class="cat-filter-btn" data-cat="課程執行">課程執行</button>
+          <button class="cat-filter-btn" data-cat="推廣策略">推廣策略</button>
+          <button class="cat-filter-btn" data-cat="後續規劃">後續規劃</button>
+        </div>
+
+        <div class="search-input-box">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="qaSearchInput" placeholder="搜尋問題、解答或關鍵字...">
+        </div>
+      </div>
+
+      <!-- 1. 列表模式容器 -->
+      <div class="qa-card-list" id="qaListContainer">
+        <!-- 由 JavaScript 動態生成 Q&A 卡片 -->
+      </div>
+
+      <!-- 2. 模擬考演練閃卡容器 (預設隱藏) -->
+      <div class="qa-drill-container" id="qaDrillContainer">
+        <div class="drill-card">
+          <!-- 頂部進度條 -->
+          <div class="drill-progress-bar">
+            <div class="drill-progress-fill" id="drillProgressFill"></div>
+          </div>
+
+          <div>
+            <div class="drill-header">
+              <span class="q-badge" id="drillBadge">空間設備・高頻必考</span>
+              <span style="font-weight:700; color:var(--text-muted);" id="drillCounter">1 / 12</span>
+            </div>
+
+            <div class="drill-question-box">
+              <div style="font-size:0.9rem; color:var(--text-muted); font-weight:600;">訪視委員提問：</div>
+              <h3 class="drill-q-title" id="drillQuestion">題目載入中...</h3>
+            </div>
+
+            <!-- 揭曉之應答要點區塊 -->
+            <div class="drill-answer-reveal-box" id="drillRevealBox">
+              <div style="font-size:0.95rem; font-weight:700; color:#15803d; margin-bottom:0.5rem;">
+                🎯 建議應答話術與要點解析：
+              </div>
+              <p style="font-size:0.95rem; color:#1e293b; line-height:1.7; margin-bottom:1rem;" id="drillAnswerText"></p>
+              
+              <div style="background:#fff; border:1px solid #bbf7d0; padding:1rem; border-radius:var(--radius-sm); margin-bottom:1rem;">
+                <div style="font-size:0.85rem; font-weight:700; color:var(--primary); margin-bottom:0.35rem;">必備佐證重點：</div>
+                <ul id="drillPointsUl" style="padding-left:1.25rem; font-size:0.9rem; color:#334155;"></ul>
+              </div>
+
+              <div style="display:flex; align-items:center; gap:0.5rem; font-size:0.85rem;">
+                <span>關聯簡報頁：</span>
+                <span id="drillRelatedSlides"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 底部切換控制 -->
+          <div class="drill-controls">
+            <button class="btn-drill-nav" id="btnDrillPrev">◀ 上一題</button>
+            <button class="btn-reveal" id="btnRevealAnswer">👀 揭曉作答要點與佐證</button>
+            <button class="btn-drill-nav" id="btnDrillNext">下一題 ▶</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- ========================================================
+         【C. 簡報模式 (Presentation Player)】
+         ======================================================== -->
+    <section id="view-modeC" class="view-section">
+
+      <div class="deck-container">
+        
+        <!-- 簡報投影視窗 (16:9 Canvas) -->
+        <div class="deck-viewport-box" id="deckViewportBox">
+          <!-- 頂部懸浮狀態條 -->
+          <div class="deck-top-bar">
+            <div class="deck-slide-badge" id="deckSlideBadge">1 / 25</div>
+            <div class="deck-category-badge" id="deckCategoryBadge">開場簡報</div>
+          </div>
+
+          <!-- 投影片圖像主體 -->
+          <img src="slides_img/slide_01.png" alt="投影片播放中" class="deck-slide-img" id="deckSlideImg">
+
+          <!-- 左右換頁懸浮箭頭 -->
+          <button class="deck-nav-arrow prev" id="arrowPrev" title="上一頁 (鍵盤 ← 或 PageUp)">❮</button>
+          <button class="deck-nav-arrow next" id="arrowNext" title="下一頁 (鍵盤 → 或 空白鍵)">❯</button>
+        </div>
+
+        <!-- 播放控制工具列 -->
+        <div class="deck-controls-bar">
+          <div class="deck-controls-left">
+            <button class="deck-btn" id="deckPrevBtn">◀ 上一頁</button>
+            <button class="deck-btn" id="deckNextBtn">下一頁 ▶</button>
+
+            <span style="font-size:0.85rem; color:var(--text-muted); margin: 0 0.5rem;">
+              第 <input type="number" id="deckJumpInput" class="slide-jump-input" min="1" max="25" value="1"> / <span id="deckTotalSlidesSpan">25</span> 頁
+            </span>
+
+            <span style="color:var(--border-color);">|</span>
+            <span id="deckSlideTitle" style="font-size:0.9rem; font-weight:700; color:var(--text-main); margin-left:0.35rem;">
+              樂齡數位場域第二次訪視輔導
+            </span>
+          </div>
+
+          <div class="deck-controls-right">
+            <button class="deck-btn active" id="toggleNotesBtn" title="顯示演講逐字稿與備忘錄 (快捷鍵 N)">
+              📝 講稿備忘
+            </button>
+            <button class="deck-btn" id="toggleThumbsBtn" title="展開所有投影片縮圖">
+              🖼️ 縮圖導覽
+            </button>
+            <button class="deck-btn" id="autoPlayBtn" title="自動輪播簡報 (每 4.5 秒)">
+              ▶ 自動輪播
+            </button>
+            <button class="deck-btn" id="deckFullscreenBtn" title="全螢幕放映模式 (快捷鍵 F)">
+              ⛶ 全螢幕
+            </button>
+          </div>
+        </div>
+
+        <!-- 講稿／備忘錄面板 (Speaker Notes Panel) -->
+        <div class="deck-notes-panel active" id="deckNotesPanel">
+          <div class="deck-notes-header">
+            <h3>🎙️ 簡報人隨身講稿與備忘重點（陳足女常務監事）</h3>
+            <span style="font-size:0.85rem; color:var(--text-muted);">
+              建議演講語速平穩、親切，配合投影片數據強調具體成果
+            </span>
+          </div>
+          <div class="deck-notes-content" id="deckNotesContent">
+            載入講稿中...
+          </div>
+        </div>
+
+        <!-- 底部投影片縮圖快速跳轉抽屜 (Thumbnail Drawer) -->
+        <div class="thumbnail-drawer" id="thumbnailDrawer">
+          <div class="thumbnail-track" id="thumbnailTrack">
+            <!-- 由 JavaScript 動態產生 25 頁縮圖 -->
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= 頁腳 ================= -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div>
+        <strong>教育部南投縣樂齡學習數位示範體驗場域（魚池）</strong>
+        <span style="margin: 0 0.5rem;">|</span>
+        執行單位：南投縣樂齡教育文化發展協會
+      </div>
+      <div>
+        科技樂齡 幸福南投・迎向科技 贏在學習 © 2026
+      </div>
+    </div>
+  </footer>
+
+  <!-- 引用數據檔與核心邏輯 -->
+  <script src="slides_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
