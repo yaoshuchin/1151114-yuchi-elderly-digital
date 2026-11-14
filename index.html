@@ -42,6 +42,10 @@
           <span>📽️ C. 簡報模式</span>
           <span class="badge-pill">畫筆·全螢幕</span>
         </button>
+        <button class="mode-tab-btn" data-mode="modeQR" role="tab" id="tabModeQR">
+          <span>📱 QR</span>
+          <span class="badge-pill" style="background:#e0f2fe; color:#0369a1;">二維條碼·縮網址</span>
+        </button>
       </nav>
 
       <!-- 多功能工具列：字體選中/大/特大、布景選淺/深/綠/藍、水晶音樂4首 -->
@@ -846,6 +850,134 @@
 
     </section>
 
+    <!-- ========================================================
+         【📱 QR 掃碼與公開縮網址 (QR Code & Short URL)】
+         ======================================================== -->
+    <section id="view-modeQR" class="view-section">
+      <div class="qr-view-container">
+
+        <!-- 頂部形象 Banner -->
+        <div class="hero-banner" style="background: linear-gradient(135deg, #0369a1 0%, #0284c7 50%, #0d9488 100%);">
+          <div class="hero-tag">📱 行動掃碼・立即訪問・公開分享</div>
+          <h1 class="hero-title">公開網頁二維條碼與縮網址專區</h1>
+          <p class="hero-subtitle">
+            本展示系統已全面開放公開瀏覽（已解除密碼限制），訪視委員、長官與社區長輩現場拿出手機相機對準條碼，或直接輸入極簡縮網址即可立即瀏覽！
+          </p>
+          <div class="hero-meta-row">
+            <div class="hero-meta-item">🌐 <strong>官方完整網址：</strong>https://yaoshuchin.github.io/1151114-yuchi-elderly-digital/</div>
+            <div class="hero-meta-item">🔗 <strong>官方縮網址：</strong>https://tinyurl.com/22qbsl3w</div>
+          </div>
+        </div>
+
+        <!-- 雙卡片展示網格：二維條碼 + 縮網址 -->
+        <div class="qr-dual-cards-grid">
+
+          <!-- 卡片 1: 二維條碼 (QR Code) -->
+          <div class="qr-feature-card">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:1.6rem;">📱</span>
+              <h3 style="font-size:1.3rem; font-weight:800; color:var(--text-main);">二維條碼 (QR Code)</h3>
+            </div>
+            <div style="font-size:0.9rem; color:var(--text-muted);">
+              手機相機或 LINE 掃描器對準即可直接開啟
+            </div>
+
+            <div class="qr-image-frame">
+              <img src="qrcode.png" alt="魚池樂齡數位示範場域 QR Code" class="qr-code-img" id="qrImgMain" />
+            </div>
+
+            <div class="qr-url-badge-box" title="完整公開網址">
+              https://yaoshuchin.github.io/1151114-yuchi-elderly-digital/
+            </div>
+
+            <div class="qr-actions-row">
+              <button class="btn-qr-action" id="btnCopyFullUrl">
+                📋 複製完整網址
+              </button>
+              <a href="qrcode.png" download="魚池數位中心成果網頁_QRCode.png" class="btn-qr-action secondary" title="下載高清 QR Code 圖片">
+                📥 下載條碼圖
+              </a>
+              <a href="https://yaoshuchin.github.io/1151114-yuchi-elderly-digital/" target="_blank" rel="noopener noreferrer" class="btn-qr-action secondary">
+                🚀 開啟網頁
+              </a>
+            </div>
+          </div>
+
+          <!-- 卡片 2: 極簡縮網址 (Short URL) -->
+          <div class="qr-feature-card">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span style="font-size:1.6rem;">🔗</span>
+              <h3 style="font-size:1.3rem; font-weight:800; color:var(--text-main);">公開展示極簡縮網址</h3>
+            </div>
+            <div style="font-size:0.9rem; color:var(--text-muted);">
+              方便快速鍵入或口頭宣導・自動安全轉址
+            </div>
+
+            <div style="background:var(--primary-light); border:2px dashed var(--primary); border-radius:var(--radius-lg); padding:1.25rem 1rem; width:100%; margin:0.5rem 0;">
+              <div style="font-size:0.85rem; font-weight:700; color:var(--primary-dark); margin-bottom:0.25rem;">🌟 推薦極簡縮網址：</div>
+              <div class="short-url-highlight" id="shortUrlText">https://tinyurl.com/22qbsl3w</div>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">（可直接鍵入 tinyurl.com/22qbsl3w）</div>
+            </div>
+
+            <div class="qr-image-frame" style="padding:0.6rem;">
+              <img src="qrcode_tinyurl.png" alt="縮網址 QR Code" style="width:140px; height:140px; display:block;" />
+            </div>
+
+            <div class="qr-actions-row">
+              <button class="btn-qr-action" id="btnCopyShortUrl" style="background:var(--secondary);">
+                📋 一鍵複製縮網址
+              </button>
+              <a href="https://tinyurl.com/22qbsl3w" target="_blank" rel="noopener noreferrer" class="btn-qr-action secondary">
+                🔗 測試縮網址
+              </a>
+              <a href="https://github.com/yaoshuchin/1151114-yuchi-elderly-digital" target="_blank" rel="noopener noreferrer" class="btn-qr-action secondary">
+                📦 GitHub 原始庫
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 樂齡長輩與現場掃碼指引 -->
+        <div class="qr-guide-steps">
+          <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-main); display:flex; align-items:center; gap:0.5rem;">
+            💡 現場掃碼操作四步驟（手機免安裝任何 APP）
+          </h3>
+          <div class="guide-steps-grid">
+            <div class="guide-step-item">
+              <div class="step-num-pill">1</div>
+              <div>
+                <strong>打開手機相機</strong><br>
+                <span style="font-size:0.85rem; color:var(--text-muted);">iPhone 或 Android 手機皆可，開啟內建相機功能。</span>
+              </div>
+            </div>
+            <div class="guide-step-item">
+              <div class="step-num-pill">2</div>
+              <div>
+                <strong>對準二維條碼</strong><br>
+                <span style="font-size:0.85rem; color:var(--text-muted);">將手機鏡頭對準畫面左側的 QR Code 圖案。</span>
+              </div>
+            </div>
+            <div class="guide-step-item">
+              <div class="step-num-pill">3</div>
+              <div>
+                <strong>輕按黃色彈出連結</strong><br>
+                <span style="font-size:0.85rem; color:var(--text-muted);">螢幕將自動出現網址提示氣泡，輕按即可立即進入。</span>
+              </div>
+            </div>
+            <div class="guide-step-item">
+              <div class="step-num-pill">4</div>
+              <div>
+                <strong>自由瀏覽成果</strong><br>
+                <span style="font-size:0.85rem; color:var(--text-muted);">已全面解除密碼保護，免登入、無障礙暢覽全部成果！</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
   </main>
 
   <!-- ================= 頁腳 ================= -->
@@ -867,5 +999,8 @@
   <!-- 引用數據檔與核心邏輯 -->
   <script src="slides_data.js"></script>
   <script src="app.js"></script>
+  <!-- 複製成功提示氣泡 -->
+  <div class="copy-toast" id="copyToast">✅ 網址已成功複製到剪貼簿！</div>
+
 </body>
 </html>

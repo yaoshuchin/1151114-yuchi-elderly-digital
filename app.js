@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
       modeCenter: document.getElementById('view-modeCenter'),
       modeA: document.getElementById('view-modeA'),
       modeB: document.getElementById('view-modeB'),
-      modeC: document.getElementById('view-modeC')
+      modeC: document.getElementById('view-modeC'),
+      modeQR: document.getElementById('view-modeQR')
     },
     // 字體與布景
     fontBtns: document.querySelectorAll('.seg-btn[data-font-val]'),
@@ -1045,7 +1046,50 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 9. 初始化啟動
+  // 9. QR 複製網址與提示氣泡
+  // ==========================================
+  function showCopyToast(msg) {
+    const toast = document.getElementById('copyToast');
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 2500);
+  }
+
+  const btnCopyFullUrl = document.getElementById('btnCopyFullUrl');
+  if (btnCopyFullUrl) {
+    btnCopyFullUrl.addEventListener('click', () => {
+      const url = 'https://yaoshuchin.github.io/1151114-yuchi-elderly-digital/';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          showCopyToast('✅ 完整公開網址已複製到剪貼簿！');
+        }).catch(() => {
+          prompt('請手動複製網址：', url);
+        });
+      } else {
+        prompt('請手動複製網址：', url);
+      }
+    });
+  }
+
+  const btnCopyShortUrl = document.getElementById('btnCopyShortUrl');
+  if (btnCopyShortUrl) {
+    btnCopyShortUrl.addEventListener('click', () => {
+      const shortUrl = 'https://tinyurl.com/22qbsl3w';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(shortUrl).then(() => {
+          showCopyToast('✅ 極簡縮網址已複製到剪貼簿！');
+        }).catch(() => {
+          prompt('請手動複製縮網址：', shortUrl);
+        });
+      } else {
+        prompt('請手動複製縮網址：', shortUrl);
+      }
+    });
+  }
+
+  // ==========================================
+  // 10. 初始化啟動
   // ==========================================
   buildThumbnailTrack();
   buildModeAGallery();
@@ -1053,7 +1097,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSlide(1);
 
   const hash = window.location.hash.replace('#', '');
-  if (hash === 'modeA' || hash === 'modeB' || hash === 'modeC' || hash === 'modeCenter') {
+  if (hash === 'modeA' || hash === 'modeB' || hash === 'modeC' || hash === 'modeCenter' || hash === 'modeQR') {
     switchMode(hash);
   }
 });
