@@ -830,12 +830,22 @@
               <span id="fsMinimizeIcon">🔽</span>
             </button>
 
+            <!-- 關閉畫筆模式專屬按鍵 (快捷鍵 D 或 Esc) -->
+            <button class="draw-tool-btn fs-close-draw-btn" id="fsCloseDrawBtn" title="關閉畫筆模式 (快捷鍵 D 或 Esc)">
+              <span class="tool-icon">✕</span><span class="tool-text">關閉畫筆</span>
+            </button>
+
             <!-- 全螢幕退出按鈕 (正下方最右側) -->
             <div class="deck-toolbar-divider fs-only"></div>
-            <button class="draw-tool-btn fs-only fs-exit-btn" id="fsExitFullscreenBtn" title="退出全螢幕 (Esc)">
-              <span>✖</span><span class="tool-text">退出</span>
+            <button class="draw-tool-btn fs-only fs-exit-btn" id="fsExitFullscreenBtn" title="退出全螢幕">
+              <span>⛶</span><span class="tool-text">退出</span>
             </button>
           </div>
+
+          <!-- 全螢幕畫筆關閉時的超迷你喚醒膠囊 (快捷鍵 D 亦可開啟) -->
+          <button class="fs-floating-pen-activator" id="fsFloatingPenActivator" title="開啟畫筆工具 (快捷鍵 D)">
+            ✏️ 畫筆
+          </button>
 
         </div>
 

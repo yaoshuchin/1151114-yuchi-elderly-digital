@@ -579,19 +579,66 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function turnOffDrawingMode() {
+    drawState.isActive = false;
+    if (canvas) canvas.classList.remove('active');
+    if (elements.drawingToolbar) {
+      elements.drawingToolbar.classList.add('is-hidden');
+    }
+    if (elements.toggleDrawingBtn) {
+      elements.toggleDrawingBtn.innerHTML = '✏️ 螢幕畫筆';
+      elements.toggleDrawingBtn.classList.remove('active');
+    }
+    const fsTogglePenBtn = document.getElementById('fsTogglePenBtn');
+    if (fsTogglePenBtn) fsTogglePenBtn.classList.remove('active');
+    const fsFloatingPenActivator = document.getElementById('fsFloatingPenActivator');
+    if (fsFloatingPenActivator) fsFloatingPenActivator.classList.add('visible');
+  }
+
+  function turnOnDrawingMode() {
+    drawState.isActive = true;
+    if (canvas) canvas.classList.add('active');
+    if (elements.drawingToolbar) {
+      elements.drawingToolbar.classList.remove('is-hidden');
+      elements.drawingToolbar.style.display = 'flex';
+    }
+    if (elements.toggleDrawingBtn) {
+      elements.toggleDrawingBtn.innerHTML = '✏️ 關閉畫筆';
+      elements.toggleDrawingBtn.classList.add('active');
+    }
+    const fsTogglePenBtn = document.getElementById('fsTogglePenBtn');
+    if (fsTogglePenBtn) fsTogglePenBtn.classList.add('active');
+    const fsFloatingPenActivator = document.getElementById('fsFloatingPenActivator');
+    if (fsFloatingPenActivator) fsFloatingPenActivator.classList.remove('visible');
+    resizeAnnotationCanvas();
+  }
+
+  function toggleDrawingMode() {
+    if (drawState.isActive && elements.drawingToolbar && !elements.drawingToolbar.classList.contains('is-hidden')) {
+      turnOffDrawingMode();
+    } else {
+      turnOnDrawingMode();
+    }
+  }
+
   function handleFullscreenStateChange() {
     const isFs = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
     if (isFs) {
       elements.viewportBox.classList.add('is-fullscreen');
       elements.drawingToolbar.style.display = 'flex';
+      elements.drawingToolbar.classList.remove('is-hidden');
       drawState.isActive = true;
       canvas.classList.add('active');
       const fsTogglePenBtn = document.getElementById('fsTogglePenBtn');
       if (fsTogglePenBtn) fsTogglePenBtn.classList.add('active');
       const fsSlideCounter = document.getElementById('fsSlideCounter');
       if (fsSlideCounter) fsSlideCounter.textContent = `${state.currentSlideIndex} / ${state.totalSlides}`;
+      const fsFloatingPenActivator = document.getElementById('fsFloatingPenActivator');
+      if (fsFloatingPenActivator) fsFloatingPenActivator.classList.remove('visible');
     } else {
       elements.viewportBox.classList.remove('is-fullscreen');
+      const fsFloatingPenActivator = document.getElementById('fsFloatingPenActivator');
+      if (fsFloatingPenActivator) fsFloatingPenActivator.classList.remove('visible');
       if (!elements.toggleDrawingBtn.classList.contains('active')) {
         elements.drawingToolbar.style.display = 'none';
         drawState.isActive = false;
@@ -618,6 +665,12 @@ document.addEventListener('DOMContentLoaded', () => {
       } else if (e.key.toLowerCase() === 'n') {
         e.preventDefault();
         if (elements.toggleNotesBtn) elements.toggleNotesBtn.click();
+      } else if (e.key.toLowerCase() === 'd' || e.key.toLowerCase() === 'p') {
+        e.preventDefault();
+        toggleDrawingMode();
+      } else if (e.key === 'Escape' && drawState.isActive && !elements.drawingToolbar.classList.contains('is-hidden')) {
+        e.preventDefault();
+        turnOffDrawingMode();
       }
     }
   });
@@ -883,6 +936,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const btnDrawClear = document.getElementById('btnDrawClear');
   if (btnDrawClear) btnDrawClear.addEventListener('click', clearAnnotationCanvas);
+
+  // 關閉畫筆按鈕 (實體按鍵式關閉)
+  const fsCloseDrawBtn = document.getElementById('fsCloseDrawBtn');
+  if (fsCloseDrawBtn) fsCloseDrawBtn.addEventListener('click', turnOffDrawingMode);
+
+  // 畫筆關閉後的微型重新開啟鈕
+  const fsFloatingPenActivator = document.getElementById('fsFloatingPenActivator');
+  if (fsFloatingPenActivator) fsFloatingPenActivator.addEventListener('click', turnOnDrawingMode);
 
   // 全螢幕底部工具列專屬換頁與功能控制
   const fsPrevBtn = document.getElementById('fsPrevBtn');

@@ -2118,23 +2118,79 @@ body[data-theme="dark"] .music-player-widget {
 .deck-viewport-box.is-fullscreen .deck-drawing-toolbar {
   display: flex !important;
   position: fixed !important;
-  bottom: 0.5rem !important; /* 緊貼螢幕最底緣，避免遮擋簡報 */
+  bottom: 0.35rem !important; /* 極度緊貼底邊，徹底釋放簡報空間 */
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 1000000 !important;
-  background: rgba(15, 23, 42, 0.8) !important;
-  backdrop-filter: blur(12px) !important;
-  -webkit-backdrop-filter: blur(12px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
-  padding: 0.2rem 0.5rem !important; /* 縮小內距 */
+  background: rgba(15, 23, 42, 0.78) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.18) !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5) !important;
+  padding: 0.15rem 0.45rem !important; /* 緊湊微型化 */
   border-radius: 999px !important;
   max-width: 96vw !important;
   overflow-x: auto !important;
   pointer-events: auto !important;
-  opacity: 0.45; /* 平時半透明，簡報底下內容清晰可見 */
-  transition: opacity 0.25s ease, transform 0.25s ease !important;
-  gap: 0.25rem !important; /* 按鈕微型間隙 */
+  opacity: 0.38; /* 平時清透半透明，投影片文字一覽無遺 */
+  transition: opacity 0.2s ease, transform 0.2s ease !important;
+  gap: 0.2rem !important;
+}
+
+/* 畫筆關閉隱藏樣式 */
+.deck-drawing-toolbar.is-hidden {
+  display: none !important;
+}
+
+/* 全螢幕畫筆關閉時的超微型膠囊鈕 */
+.fs-floating-pen-activator {
+  display: none;
+  position: fixed;
+  bottom: 0.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000000;
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #5eead4;
+  border: 1px solid rgba(94, 234, 212, 0.4);
+  padding: 0.15rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+  opacity: 0.5;
+}
+.fs-floating-pen-activator:hover {
+  opacity: 1;
+  background: rgba(15, 23, 42, 0.95);
+  transform: translateX(-50%) scale(1.06);
+  color: #fff;
+  border-color: #5eead4;
+}
+
+:fullscreen .fs-floating-pen-activator.visible,
+:-webkit-full-screen .fs-floating-pen-activator.visible,
+.deck-viewport-box:fullscreen .fs-floating-pen-activator.visible,
+.deck-viewport-box:-webkit-full-screen .fs-floating-pen-activator.visible,
+.deck-viewport-box.is-fullscreen .fs-floating-pen-activator.visible {
+  display: flex !important;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.fs-close-draw-btn {
+  background: rgba(239, 68, 68, 0.25) !important;
+  border-color: rgba(239, 68, 68, 0.5) !important;
+  color: #fca5a5 !important;
+}
+.fs-close-draw-btn:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
 }
 
 /* 滑鼠滑過正下方工具列時，立即恢復 100% 清晰方便操作 */
