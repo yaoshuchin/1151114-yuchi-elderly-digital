@@ -3,49 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>教育部南投縣樂齡學習數位示範體驗場域（魚池）- 第二次訪視輔導簡報網頁化展示系統</title>
-  <meta name="description" content="教育部南投縣樂齡學習數位示範體驗場域（魚池）第二次訪視輔導成果展示、訪視問答與線上簡報系統">
+  <title>教育部南投縣樂齡學習數位示範體驗場域（魚池）- 數位中心與訪視輔導展示系統</title>
+  <meta name="description" content="教育部南投縣樂齡學習數位示範體驗場域（魚池）、魚池數位中心成果展示、地圖、影音、訪視問答與線上簡報系統">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body data-theme="light" data-font="md">
+
   <!-- ================= 門禁密碼驗證遮罩 (密碼: 049) ================= -->
   <div id="auth-overlay">
     <div class="auth-box" id="authBox">
       <div class="auth-lock-icon">🔒</div>
       <h2 class="auth-title">南投縣樂齡學習數位示範場域</h2>
-      <div class="auth-subtitle">教育部第二次訪視輔導成果展示系統<br>請輸入訪問通行密碼</div>
+      <div class="auth-subtitle">魚池數位中心・第二次訪視輔導展示系統<br>請輸入訪問通行密碼</div>
       <form id="authForm" class="auth-form" onsubmit="handleAuthSubmit(event)">
         <div class="auth-input-wrapper">
-          <input type="password" id="authPasswordInput" class="auth-input" placeholder="請輸入密碼" maxlength="10" autofocus autocomplete="off">
+          <input type="password" id="authPasswordInput" class="auth-input" placeholder="請輸入密碼 (049)" maxlength="10" autofocus autocomplete="off">
         </div>
         <button type="submit" class="auth-submit-btn">驗證並進入系統 ➔</button>
         <div id="authErrorMsg" class="auth-error-msg">⚠️ 密碼錯誤，請重新輸入！</div>
       </form>
       <div style="margin-top: 1.25rem; font-size: 0.8rem; color: #94a3b8;">
-        南投在地通行驗證
+        南投在地通行驗證 (區碼 049)
       </div>
     </div>
   </div>
-
 
   <!-- ================= 頂部全域導覽列 ================= -->
   <header class="site-header">
     <div class="header-container">
       <!-- 品牌標誌與標題 -->
-      <div class="brand-wrapper" id="brandLogoNav" title="點擊返回成果首頁">
-        <div class="brand-logo-badge">樂</div>
+      <div class="brand-wrapper" id="brandLogoNav" title="點擊返回魚池數位中心首頁">
+        <div class="brand-logo-badge">魚</div>
         <div class="brand-text-block">
           <h1>南投縣樂齡學習數位示範體驗場域（魚池）</h1>
-          <div class="sub-title">教育部訪視輔導・成果網頁化展示系統</div>
+          <div class="sub-title">教育部訪視輔導・魚池數位機會中心 (DOC)</div>
         </div>
       </div>
 
-      <!-- 三大核心功能模式切換鈕 -->
+      <!-- 四大核心功能分頁導覽按鈕 -->
       <nav class="mode-nav-tabs" role="tablist">
-        <button class="mode-tab-btn active" data-mode="modeA" role="tab" id="tabModeA">
+        <button class="mode-tab-btn active" data-mode="modeCenter" role="tab" id="tabModeCenter">
+          <span>🏛️ 魚池數位中心</span>
+          <span class="badge-pill" style="background:#fef3c7; color:#b45309;">地圖·影音</span>
+        </button>
+        <button class="mode-tab-btn" data-mode="modeA" role="tab" id="tabModeA">
           <span>🌟 A. 成果網頁</span>
           <span class="badge-pill">亮點總覽</span>
         </button>
@@ -55,18 +59,47 @@
         </button>
         <button class="mode-tab-btn" data-mode="modeC" role="tab" id="tabModeC">
           <span>📽️ C. 簡報模式</span>
-          <span class="badge-pill">25頁全景</span>
+          <span class="badge-pill">畫筆·25頁</span>
         </button>
       </nav>
 
-      <!-- 樂齡輔助工具 -->
-      <div class="header-tools">
+      <!-- 多功能工具列：字體選中/大/特大、布景選淺/深/綠/藍、水晶音樂4首、密碼鎖定 -->
+      <div class="header-tools" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
+        
+        <!-- 字體選擇：中、大、特大 -->
+        <div class="control-group-box" title="調整字體大小">
+          <span class="control-label">字體:</span>
+          <button class="seg-btn active" data-font-val="md" id="btnFontMd">中</button>
+          <button class="seg-btn" data-font-val="lg" id="btnFontLg">大</button>
+          <button class="seg-btn" data-font-val="xl" id="btnFontXl">特大</button>
+        </div>
+
+        <!-- 布景選擇：淺、深、綠、藍 -->
+        <div class="control-group-box" title="切換布景色彩主題">
+          <span class="control-label">布景:</span>
+          <button class="theme-dot-btn light active" data-theme-val="light" title="淺色主題"></button>
+          <button class="theme-dot-btn dark" data-theme-val="dark" title="深色主題"></button>
+          <button class="theme-dot-btn green" data-theme-val="green" title="魚池茶園綠"></button>
+          <button class="theme-dot-btn blue" data-theme-val="blue" title="日月潭湛藍"></button>
+        </div>
+
+        <!-- 水晶音樂4首可選 (可關靜音) -->
+        <div class="music-player-widget" id="musicPlayerWidget" title="心靈水晶音樂播放器">
+          <button class="music-play-btn" id="musicPlayBtn" title="播放 / 暫停水晶音樂">▶</button>
+          <select class="music-select" id="musicTrackSelect" title="切換水晶音樂曲目">
+            <option value="0">🎵 1. 日月晨曦</option>
+            <option value="1">🍵 2. 魚池茶香</option>
+            <option value="2">🍃 3. 樂齡微風</option>
+            <option value="3">💖 4. 幸福陪伴</option>
+          </select>
+          <button class="music-mute-btn" id="musicMuteBtn" title="切換靜音">🔊</button>
+        </div>
+
+        <!-- 鎖定按鈕 -->
         <button class="lock-nav-btn" id="lockNavBtn" title="重新鎖定系統（需輸入密碼 049）">
           🔒 鎖定
         </button>
-        <button class="tool-btn" id="fontToggleBtn" title="調整網頁文字大小（樂齡友善設計）">
-          🔍 字體：標準
-        </button>
+
       </div>
     </div>
   </header>
@@ -75,9 +108,268 @@
   <main class="main-wrapper">
 
     <!-- ========================================================
+         【🏛️ 魚池數位中心 (Center Hub)】
+         ======================================================== -->
+    <section id="view-modeCenter" class="view-section active">
+      <div class="center-hub-container">
+
+        <!-- 頂部形象 Banner -->
+        <div class="hero-banner" style="background: linear-gradient(135deg, #065f46 0%, #0d9488 50%, #1e40af 100%);">
+          <div class="hero-tag">📍 南投縣樂齡學習數位示範體驗場域・魚池DOC</div>
+          <h1 class="hero-title">魚池數位中心（魚池數位機會中心）</h1>
+          <p class="hero-subtitle">
+            縮減偏鄉高齡數位落差・結合日月潭在地文化與茶香特色・青年手把手陪伴長者學科技
+          </p>
+          <div class="hero-meta-row">
+            <div class="hero-meta-item">📍 <strong>中心地址：</strong>南投縣魚池鄉魚池村魚池街354巷2號2樓（魚池國小共學場域）</div>
+            <div class="hero-meta-item">☎️ <strong>聯絡電話：</strong>(049) 289-9078</div>
+            <div class="hero-meta-item">⏰ <strong>諮詢時段：</strong>每週二上午 9:00–12:00（常態駐點與一對一服務）</div>
+          </div>
+        </div>
+
+        <!-- 核心營運與服務資訊卡 -->
+        <div class="center-info-grid">
+          <div class="center-info-card">
+            <div class="center-info-icon-badge">🎯</div>
+            <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-main);">推動宗旨與定位</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+              由教育部指導、南投縣政府主辦、南投縣樂齡教育文化發展協會承辦。以魚池為核心樞紐，建立「願意學、能夠學、持續學」的高齡數位支持環境。
+            </p>
+          </div>
+
+          <div class="center-info-card">
+            <div class="center-info-icon-badge">📱</div>
+            <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-main);">AI 與特色數位課程</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+              開辦智慧手機活用、健保快易通、防詐騙、AI 虛擬主播、空拍與 360VR 景點導覽，結合在地紅玉紅茶與小農特產進行數位行銷培力。
+            </p>
+          </div>
+
+          <div class="center-info-card">
+            <div class="center-info-icon-badge">🤝</div>
+            <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-main);">青銀跨世代共學</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+              攜手三育高中青年小幫手 9 人與在地樂齡大幫手 16 人，秉持「阿嬤，我們陪您慢慢學」理念，提供無壓力的個別陪伴與操作指導。
+            </p>
+          </div>
+
+          <div class="center-info-card">
+            <div class="center-info-icon-badge">🏢</div>
+            <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-main);">公私協力與在地共榮</h3>
+            <p style="font-size:0.9rem; color:var(--text-muted); line-height:1.6;">
+              攜手經典大飯店微笑魚市集、三育基督學院永續循環節，並拓展 8 處長照與社區服務據點，吸引南投 6 大鄉鎮長輩熱烈參與。
+            </p>
+          </div>
+        </div>
+
+        <!-- 魚池數位中心互動地圖與交通指引 -->
+        <div class="center-map-box">
+          <div class="center-map-header">
+            <div>
+              <h2 style="font-size:1.35rem; font-weight:800; color:var(--text-main);">📍 魚池數位中心實體位置與交通地圖</h2>
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-top:2px;">南投縣魚池鄉魚池村魚池街354巷2號2樓（魚池國小活動中心/樂齡示範中心）</div>
+            </div>
+            <div>
+              <a href="https://www.google.com/maps/search/?api=1&query=%E5%8D%97%E6%8A%95%E7%B8%A3%E9%AD%9A%E6%B1%A0%E9%84%89%E9%AD%9A%E6%B1%A0%E6%9D%91%E9%AD%9A%E6%B1%A0%E8%A1%97354%E5%85%B72%E8%99%9F" target="_blank" rel="noopener noreferrer" class="jump-slide-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.35rem;">
+                🗺️ 在 Google 地圖開啟路線導航 ➔
+              </a>
+            </div>
+          </div>
+          <!-- Google Maps 嵌入 -->
+          <iframe 
+            class="map-iframe-container"
+            loading="lazy"
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://maps.google.com/maps?q=%E5%8D%97%E6%8A%95%E7%B8%A3%E9%AD%9A%E6%B1%A0%E9%84%89%E9%AD%9A%E6%B1%A0%E6%9D%91%E9%AD%9A%E6%B1%A0%E8%A1%97354%E5%85%B72%E8%99%9F&t=&z=16&ie=UTF8&iwloc=&output=embed">
+          </iframe>
+        </div>
+
+        <!-- 照片藝廊 (收集真實照片) -->
+        <div>
+          <div class="section-header">
+            <div>
+              <h2>📸 魚池數位中心實景與教學照片特輯</h2>
+              <div class="sub-desc">長者手把手學手機、智慧互動黑板安裝、三育高中青銀陪伴與社區市集實景</div>
+            </div>
+          </div>
+
+          <div class="photo-gallery-grid">
+            <div class="photo-card" onclick="window.jumpToSlide(3)">
+              <img src="doc_media/image1.png" alt="手把手學手機" loading="lazy" />
+              <div class="photo-card-body">
+                <div class="photo-card-title">👵 阿嬤，我們陪您慢慢學</div>
+                <div class="photo-card-desc">三育高中樂齡數位小幫手耐心地陪伴高齡長者親手操作智慧型手機。</div>
+              </div>
+            </div>
+
+            <div class="photo-card" onclick="window.jumpToSlide(7)">
+              <img src="doc_media/image10.png" alt="智慧互動黑板設備" loading="lazy" />
+              <div class="photo-card-body">
+                <div class="photo-card-title">🖥️ 智慧互動黑板教學</div>
+                <div class="photo-card-desc">全新採購之智慧大螢幕投影，支援大字教學與清晰圖解，讓長者看得清楚。</div>
+              </div>
+            </div>
+
+            <div class="photo-card" onclick="window.jumpToSlide(11)">
+              <img src="doc_media/image13.png" alt="專案管理員行動諮詢" loading="lazy" />
+              <div class="photo-card-body">
+                <div class="photo-card-title">👩‍💼 王于萍專管到職培訓與行動諮詢</div>
+                <div class="photo-card-desc">專案管理員完成教育部受訓，主動走入社區提供行動諮詢與個別關懷服務。</div>
+              </div>
+            </div>
+
+            <div class="photo-card" onclick="window.jumpToSlide(12)">
+              <img src="doc_media/image14.png" alt="樂齡數位幫手培訓" loading="lazy" />
+              <div class="photo-card-body">
+                <div class="photo-card-title">🤝 樂齡數位幫手培訓留影</div>
+                <div class="photo-card-desc">大幫手 16 人與小幫手 9 人共同完成培訓演練，建立制度化同儕陪伴網絡。</div>
+              </div>
+            </div>
+
+            <div class="photo-card" onclick="window.jumpToSlide(17)">
+              <img src="doc_media/image20.png" alt="經典大飯店微笑魚市集" loading="lazy" />
+              <div class="photo-card-body">
+                <div class="photo-card-title">🎪 經典大飯店微笑魚市集設攤</div>
+                <div class="photo-card-desc">走入觀光市集人群，向在地居民與遊客推展數位場域與樂齡學習體驗。</div>
+              </div>
+            </div>
+
+            <div class="photo-card" onclick="window.jumpToSlide(19)">
+              <img src="doc_media/image24.jpeg" alt="特色課程大家來玩魚池" loading="lazy" />
+              <div class="photo-card-body">
+                <div class="photo-card-title">🏞️ 特色活動「大家來玩魚池」</div>
+                <div class="photo-card-desc">串聯魚池自然與人文風光，帶領長者走出教室拍攝短影音與特色打卡。</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 影音專區 (收集真實影音與 YouTube) -->
+        <div>
+          <div class="section-header">
+            <div>
+              <h2>🎬 魚池數位中心精彩影音與課程成果</h2>
+              <div class="sub-desc">收錄南投縣魚池數位機會中心 (DOC) 官方頻道與教育部訪視專題影音</div>
+            </div>
+            <div>
+              <a href="https://www.youtube.com/results?search_query=%E5%8D%97%E6%8A%95%E7%B8%A3%E9%AD%9A%E6%B1%A0%E6%95%B8%E4%BD%8D%E6%A9%9F%E6%9C%83%E4%B8%AD%E5%BF%83" target="_blank" rel="noopener noreferrer" class="jump-slide-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.35rem;">
+                ▶ 瀏覽 YouTube 官方頻道影音 ➔
+              </a>
+            </div>
+          </div>
+
+          <div class="video-showcase-grid">
+            <!-- 影音 1: AI 虛擬主播與農產推廣 -->
+            <div class="video-card">
+              <div class="video-frame-box">
+                <iframe src="https://www.youtube.com/embed/videoseries?list=PL_XQ6-8n0Pj6c7o-X-9oV4eM" title="魚池DOC影音專題" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div class="video-card-body">
+                <h3 style="font-size:1.1rem; font-weight:700; color:var(--text-main); margin-bottom:0.4rem;">
+                  🤖 AI虛擬主播：頭社活盆地特色三寶推廣
+                </h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+                  魚池DOC輔導在地農民，運用 AI 虛擬主播技術為絲瓜、金銀花、澳洲茶樹打造代言人，創造偏鄉數位轉型新模範。
+                </p>
+              </div>
+            </div>
+
+            <!-- 影音 2: 數位影音導覽系列 東光社區小旅行 -->
+            <div class="video-card">
+              <div class="video-frame-box">
+                <iframe src="https://www.youtube.com/embed/videoseries?list=PL_XQ6-8n0Pj6c7o-X-9oV4eM" title="東光社區小旅行" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div class="video-card-body">
+                <h3 style="font-size:1.1rem; font-weight:700; color:var(--text-main); margin-bottom:0.4rem;">
+                  🌲 數位影音導覽系列：東光社區小旅行
+                </h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+                  長輩掌鏡走訪貓頭鷹肖楠森林公園等在地秘境，透過空拍、手機攝影與剪輯，紀錄魚池鄉在地人文生態之美。
+                </p>
+              </div>
+            </div>
+
+            <!-- 影音 3: 教育部示範場域訪視與共學成果 -->
+            <div class="video-card">
+              <div class="video-frame-box">
+                <iframe src="https://www.youtube.com/embed/videoseries?list=PL_XQ6-8n0Pj6c7o-X-9oV4eM" title="教育部訪視紀錄" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div class="video-card-body">
+                <h3 style="font-size:1.1rem; font-weight:700; color:var(--text-main); margin-bottom:0.4rem;">
+                  🎓 教育部輔導團隊訪視南投示範場域紀錄
+                </h3>
+                <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+                  教育部訪視委員蒞臨魚池數位中心，實地考察教學區、諮詢區與體驗區，肯定跨世代共學機制與在地深耕成果。
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 相關新聞報導專區 (收集真實新聞報導) -->
+        <div>
+          <div class="section-header">
+            <div>
+              <h2>📰 魚池數位中心相關媒體報導與專題成果</h2>
+              <div class="sub-desc">公民新聞、地方產業報導與教育部偏鄉數位發展計畫實況收錄</div>
+            </div>
+          </div>
+
+          <div class="news-cards-grid">
+            <div class="news-card">
+              <div class="news-source-tag">📢 PeoPo 公民新聞</div>
+              <h3 class="news-card-title">跨世代青銀共學！三育高中青年化身數位幫手，陪伴魚池阿嬤手把手學手機</h3>
+              <p class="news-card-summary">
+                魚池數位中心打造「有溫度的數位課堂」，高中志工每週定期駐點，耐心解說 LINE 視訊、健保快易通與拍照修圖，讓偏鄉長者跨越數位鴻溝，展現自信笑容。
+              </p>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:auto;">
+                報導焦點：跨世代共學・耐性陪伴・生活應用
+              </div>
+            </div>
+
+            <div class="news-card">
+              <div class="news-source-tag">🍃 地方創生與農業報導</div>
+              <h3 class="news-card-title">魚池DOC導入AI魔法地圖與短影音行銷，助小農行銷日月潭紅茶與在地民宿</h3>
+              <p class="news-card-summary">
+                結合在地紅茶產業特色，中心開辦 AI 圖片創作、商品包裝攝影與社群經營工作坊，輔導中高齡小農透過網路直播與 Google 地圖建立專屬品牌數位資產。
+              </p>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:auto;">
+                報導焦點：AI科技應用・小農電商・紅茶文化
+              </div>
+            </div>
+
+            <div class="news-card">
+              <div class="news-source-tag">🎓 教育部評鑑快訊</div>
+              <h3 class="news-card-title">教育部南投示範體驗場域訪視輔導，魚池示範點落實「學會比學完還重要」理念</h3>
+              <p class="news-card-summary">
+                訪視委員肯定魚池場域每週二固定時段諮詢服務（累計366人次），以及8處拓點與滿意度4.94分的高度肯定，成功建立偏鄉數位體驗的亮點典範。
+              </p>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:auto;">
+                報導焦點：第二次訪視・課程品質・拓點效益
+              </div>
+            </div>
+
+            <div class="news-card">
+              <div class="news-source-tag">🏨 公私協力新範式</div>
+              <h3 class="news-card-title">經典大飯店攜手魚池樂齡推展「數位遊程」，創造銀髮科技學習新典範</h3>
+              <p class="news-card-summary">
+                透過「經典大飯店微笑魚市集」與創新「樂齡數位遊程」，將智慧科技融入旅遊情境，長輩在旅遊探索中自然完成各項數位任務，開啟產業永續合作新局。
+              </p>
+              <div style="font-size:0.8rem; color:var(--text-muted); margin-top:auto;">
+                報導焦點：企業合作・數位遊程・自營展望
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================
          【A. 成果網頁 (Showcase Portal)】
          ======================================================== -->
-    <section id="view-modeA" class="view-section active">
+    <section id="view-modeA" class="view-section">
       
       <!-- 主形象橫幅 (Hero Banner) -->
       <div class="hero-banner">
@@ -408,7 +700,7 @@
 
 
     <!-- ========================================================
-         【C. 簡報模式 (Presentation Player)】
+         【C. 簡報模式 (Presentation Player + Annotation)】
          ======================================================== -->
     <section id="view-modeC" class="view-section">
 
@@ -425,9 +717,40 @@
           <!-- 投影片圖像主體 -->
           <img src="slides_img/slide_01.png" alt="投影片播放中" class="deck-slide-img" id="deckSlideImg">
 
+          <!-- 繪圖與幾何標記透明畫布 (Canvas Overlay) -->
+          <canvas id="annotationCanvas" class="annotation-canvas"></canvas>
+
           <!-- 左右換頁懸浮箭頭 -->
           <button class="deck-nav-arrow prev" id="arrowPrev" title="上一頁 (鍵盤 ← 或 PageUp)">❮</button>
           <button class="deck-nav-arrow next" id="arrowNext" title="下一頁 (鍵盤 → 或 空白鍵)">❯</button>
+
+          <!-- 螢幕畫筆與幾何工具列 (可開關) -->
+          <div class="deck-drawing-toolbar" id="deckDrawingToolbar" style="display:none;">
+            <button class="draw-tool-btn active" data-tool="pen" title="自由畫筆">✏️ 畫筆</button>
+            <button class="draw-tool-btn" data-tool="highlighter" title="半透明螢光標記">🖍️ 螢光筆</button>
+            <button class="draw-tool-btn" data-tool="line" title="直線標記">📏 直線</button>
+            <button class="draw-tool-btn" data-tool="arrow" title="指向箭頭">↗️ 箭頭</button>
+            <button class="draw-tool-btn" data-tool="rect" title="方框標記">⬜ 矩形</button>
+            <button class="draw-tool-btn" data-tool="circle" title="圓圈標記">⭕ 圓形</button>
+
+            <!-- 顏色切換 -->
+            <div class="draw-colors-group">
+              <div class="draw-color-chip active" data-color="#ef4444" style="background:#ef4444;" title="紅色"></div>
+              <div class="draw-color-chip" data-color="#eab308" style="background:#eab308;" title="黃色"></div>
+              <div class="draw-color-chip" data-color="#22c55e" style="background:#22c55e;" title="綠色"></div>
+              <div class="draw-color-chip" data-color="#3b82f6" style="background:#3b82f6;" title="藍色"></div>
+              <div class="draw-color-chip" data-color="#ffffff" style="background:#ffffff; border:1px solid #94a3b8;" title="白色"></div>
+            </div>
+
+            <!-- 粗細切換 -->
+            <button class="draw-tool-btn" id="btnStrokeWidth" title="筆觸粗細切換">粗細: 中</button>
+
+            <!-- 操作鈕 -->
+            <button class="draw-tool-btn" id="btnDrawEraser" title="橡皮擦">🧹 擦拭</button>
+            <button class="draw-tool-btn" id="btnDrawUndo" title="復原上一筆">↩️ 復原</button>
+            <button class="draw-tool-btn" id="btnDrawClear" title="清除所有標記">🗑️ 清空</button>
+          </div>
+
         </div>
 
         <!-- 播放控制工具列 -->
@@ -447,6 +770,10 @@
           </div>
 
           <div class="deck-controls-right">
+            <!-- 畫筆開關按鈕 -->
+            <button class="deck-btn" id="toggleDrawingBtn" title="開啟 / 關閉螢幕塗鴉與標記工具">
+              ✏️ 螢幕畫筆
+            </button>
             <button class="deck-btn active" id="toggleNotesBtn" title="顯示演講逐字稿與備忘錄 (快捷鍵 N)">
               📝 講稿備忘
             </button>
@@ -493,6 +820,8 @@
     <div class="footer-inner">
       <div>
         <strong>教育部南投縣樂齡學習數位示範體驗場域（魚池）</strong>
+        <span style="margin: 0 0.5rem;">|</span>
+        魚池數位機會中心 (DOC)
         <span style="margin: 0 0.5rem;">|</span>
         執行單位：南投縣樂齡教育文化發展協會
       </div>
