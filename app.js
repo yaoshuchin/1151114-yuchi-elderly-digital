@@ -135,10 +135,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   function setFontSize(size) {
     state.fontSize = size;
+    document.documentElement.dataset.font = size;
     document.body.dataset.font = size;
     localStorage.setItem('yuchi_pref_font', size);
 
-    elements.fontBtns.forEach(btn => {
+    const fontBtns = document.querySelectorAll('.seg-btn[data-font-val]');
+    fontBtns.forEach(btn => {
       if (btn.dataset.fontVal === size) {
         btn.classList.add('active');
       } else {
@@ -147,8 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  elements.fontBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
+  const fontBtns = document.querySelectorAll('.seg-btn[data-font-val]');
+  fontBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
       setFontSize(btn.dataset.fontVal);
     });
   });

@@ -43,6 +43,19 @@ body.font-xl {
 html {
   font-size: 16px;
   scroll-behavior: smooth;
+  transition: font-size 0.2s ease;
+}
+
+html[data-font="md"], :root[data-font="md"] {
+  font-size: 16px !important;
+}
+
+html[data-font="lg"], :root[data-font="lg"] {
+  font-size: 19px !important;
+}
+
+html[data-font="xl"], :root[data-font="xl"] {
+  font-size: 23px !important;
 }
 
 body {
@@ -1512,16 +1525,55 @@ body[data-theme="blue"] .hero-banner {
 }
 
 /* ========================================================
-   字體大小切換 (中、大、特大)
+   字體大小全局縮放 (中: 16px / 大: 19px / 特大: 23px)
    ======================================================== */
-body[data-font="md"] {
+html[data-font="md"], body[data-font="md"], :root[data-font="md"] {
+  font-size: 16px !important;
   --font-scale: 1rem;
 }
-body[data-font="lg"] {
-  --font-scale: 1.15rem;
+
+html[data-font="lg"], body[data-font="lg"], :root[data-font="lg"] {
+  font-size: 19px !important;
+  --font-scale: 1.18rem;
 }
-body[data-font="xl"] {
-  --font-scale: 1.3rem;
+
+html[data-font="xl"], body[data-font="xl"], :root[data-font="xl"] {
+  font-size: 23px !important;
+  --font-scale: 1.45rem;
+}
+
+body[data-font="lg"] p,
+body[data-font="lg"] li,
+body[data-font="lg"] .answer-lead,
+body[data-font="lg"] .deck-notes-content,
+body[data-font="lg"] .news-card-summary,
+body[data-font="lg"] .photo-card-desc,
+body[data-font="lg"] .feature-list li {
+  font-size: 1.12rem !important;
+  line-height: 1.75 !important;
+}
+
+body[data-font="xl"] p,
+body[data-font="xl"] li,
+body[data-font="xl"] .answer-lead,
+body[data-font="xl"] .deck-notes-content,
+body[data-font="xl"] .news-card-summary,
+body[data-font="xl"] .photo-card-desc,
+body[data-font="xl"] .feature-list li {
+  font-size: 1.35rem !important;
+  line-height: 1.85 !important;
+}
+
+body[data-font="lg"] .qa-question-title,
+body[data-font="lg"] .section-header h2,
+body[data-font="lg"] .news-card-title {
+  font-size: 1.35rem !important;
+}
+
+body[data-font="xl"] .qa-question-title,
+body[data-font="xl"] .section-header h2,
+body[data-font="xl"] .news-card-title {
+  font-size: 1.65rem !important;
 }
 
 /* 頂部工具群組 */
