@@ -864,7 +864,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btnStrokeWidth.addEventListener('click', () => {
       drawState.widthLevel = (drawState.widthLevel + 1) % 3;
       const labels = ['細', '中', '粗'];
-      btnStrokeWidth.textContent = `粗細: ${labels[drawState.widthLevel]}`;
+      btnStrokeWidth.innerHTML = `<span class="tool-icon">〰️</span><span class="tool-text">${labels[drawState.widthLevel]}</span>`;
+      btnStrokeWidth.title = `筆觸粗細: ${labels[drawState.widthLevel]}`;
     });
   }
 
@@ -913,6 +914,19 @@ document.addEventListener('DOMContentLoaded', () => {
         fsTogglePenBtn.classList.remove('active');
         canvas.classList.remove('active');
       }
+    });
+  }
+
+  // 全螢幕工具列收合開關 (防遮簡報)
+  const fsMinimizeBtn = document.getElementById('fsMinimizeBtn');
+  if (fsMinimizeBtn) {
+    fsMinimizeBtn.addEventListener('click', () => {
+      if (!elements.drawingToolbar) return;
+      elements.drawingToolbar.classList.toggle('is-minimized');
+      const isMin = elements.drawingToolbar.classList.contains('is-minimized');
+      fsMinimizeBtn.title = isMin ? '展開畫筆工具列' : '收合畫筆工具列 (避免遮住簡報)';
+      const icon = document.getElementById('fsMinimizeIcon');
+      if (icon) icon.textContent = isMin ? '✏️' : '🔽';
     });
   }
 

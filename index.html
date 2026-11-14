@@ -762,7 +762,7 @@
           <button class="deck-nav-arrow prev" id="arrowPrev" title="上一頁 (鍵盤 ← 或 PageUp)">❮</button>
           <button class="deck-nav-arrow next" id="arrowNext" title="下一頁 (鍵盤 → 或 空白鍵)">❯</button>
 
-          <!-- 螢幕畫筆與幾何工具列 (一般模式可開關；全螢幕模式自動顯示於正下方) -->
+          <!-- 螢幕畫筆與幾何工具列 (一般模式可開關；全螢幕模式自動顯示於正下方並微型化避免遮擋) -->
           <div class="deck-drawing-toolbar" id="deckDrawingToolbar" style="display:none;">
             <!-- 全螢幕快速換頁群組 (出現在正下方最左側) -->
             <div class="fs-nav-group fs-only" id="fsNavGroup">
@@ -774,19 +774,31 @@
             <div class="deck-toolbar-divider fs-only"></div>
 
             <!-- 全螢幕畫筆模式開關按鈕 -->
-            <button class="draw-tool-btn draw-toggle-btn active" id="fsTogglePenBtn" title="切換畫筆繪圖模式">
-              <span id="fsTogglePenIcon">✏️</span> <span id="fsTogglePenText">畫筆</span>
+            <button class="draw-tool-btn draw-toggle-btn active" id="fsTogglePenBtn" title="切換畫筆模式">
+              <span class="tool-icon" id="fsTogglePenIcon">✏️</span><span class="tool-text" id="fsTogglePenText">畫筆</span>
             </button>
 
             <div class="deck-toolbar-divider"></div>
 
-            <!-- 繪圖工具群組 -->
-            <button class="draw-tool-btn active" data-tool="pen" title="自由畫筆">✏️ 畫筆</button>
-            <button class="draw-tool-btn" data-tool="highlighter" title="半透明螢光標記">🖍️ 螢光筆</button>
-            <button class="draw-tool-btn" data-tool="line" title="直線標記">📏 直線</button>
-            <button class="draw-tool-btn" data-tool="arrow" title="指向箭頭">↗️ 箭頭</button>
-            <button class="draw-tool-btn" data-tool="rect" title="方框標記">⬜ 矩形</button>
-            <button class="draw-tool-btn" data-tool="circle" title="圓圈標記">⭕ 圓形</button>
+            <!-- 繪圖工具群組 (全螢幕模式下自動縮小圖示，免除遮蔽) -->
+            <button class="draw-tool-btn active" data-tool="pen" title="自由手繪筆">
+              <span class="tool-icon">✏️</span><span class="tool-text">畫筆</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="highlighter" title="螢光標記筆">
+              <span class="tool-icon">🖍️</span><span class="tool-text">螢光</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="line" title="直線標記">
+              <span class="tool-icon">📏</span><span class="tool-text">直線</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="arrow" title="指向箭頭">
+              <span class="tool-icon">↗️</span><span class="tool-text">箭頭</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="rect" title="方框標記">
+              <span class="tool-icon">⬜</span><span class="tool-text">矩形</span>
+            </button>
+            <button class="draw-tool-btn" data-tool="circle" title="圓圈標記">
+              <span class="tool-icon">⭕</span><span class="tool-text">圓形</span>
+            </button>
 
             <!-- 顏色切換 -->
             <div class="draw-colors-group">
@@ -798,17 +810,30 @@
             </div>
 
             <!-- 粗細切換 -->
-            <button class="draw-tool-btn" id="btnStrokeWidth" title="筆觸粗細切換">粗細: 中</button>
+            <button class="draw-tool-btn" id="btnStrokeWidth" title="筆觸粗細切換">
+              <span class="tool-icon">〰️</span><span class="tool-text">中</span>
+            </button>
 
             <!-- 擦拭、復原、清空 -->
-            <button class="draw-tool-btn" id="btnDrawEraser" title="橡皮擦">🧹 擦拭</button>
-            <button class="draw-tool-btn" id="btnDrawUndo" title="復原上一筆">↩️ 復原</button>
-            <button class="draw-tool-btn" id="btnDrawClear" title="清除所有標記">🗑️ 清空</button>
+            <button class="draw-tool-btn" id="btnDrawEraser" title="橡皮擦">
+              <span class="tool-icon">🧹</span><span class="tool-text">擦拭</span>
+            </button>
+            <button class="draw-tool-btn" id="btnDrawUndo" title="復原上一筆">
+              <span class="tool-icon">↩️</span><span class="tool-text">復原</span>
+            </button>
+            <button class="draw-tool-btn" id="btnDrawClear" title="清除所有標記">
+              <span class="tool-icon">🗑️</span><span class="tool-text">清空</span>
+            </button>
+
+            <!-- 全螢幕收合按鈕 (一鍵收為超微型膠囊，徹底防遮) -->
+            <button class="draw-tool-btn fs-only fs-minimize-btn" id="fsMinimizeBtn" title="收合/展開畫筆工具列 (避免遮住簡報)">
+              <span id="fsMinimizeIcon">🔽</span>
+            </button>
 
             <!-- 全螢幕退出按鈕 (正下方最右側) -->
             <div class="deck-toolbar-divider fs-only"></div>
             <button class="draw-tool-btn fs-only fs-exit-btn" id="fsExitFullscreenBtn" title="退出全螢幕 (Esc)">
-              ✖ 退出
+              <span>✖</span><span class="tool-text">退出</span>
             </button>
           </div>
 

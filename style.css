@@ -2110,7 +2110,7 @@ body[data-theme="dark"] .music-player-widget {
   border-color: #ef4444 !important;
 }
 
-/* 全螢幕時：工具列保證出現在正下方，且內建換頁、畫筆開關、顏色與退出等完整功能 */
+/* 全螢幕時：工具列微型化、緊貼底緣並支援半透明防遮蔽 */
 :fullscreen .deck-drawing-toolbar,
 :-webkit-full-screen .deck-drawing-toolbar,
 .deck-viewport-box:fullscreen .deck-drawing-toolbar,
@@ -2118,20 +2118,101 @@ body[data-theme="dark"] .music-player-widget {
 .deck-viewport-box.is-fullscreen .deck-drawing-toolbar {
   display: flex !important;
   position: fixed !important;
-  bottom: 1.5rem !important;
+  bottom: 0.5rem !important; /* 緊貼螢幕最底緣，避免遮擋簡報 */
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 1000000 !important;
-  background: rgba(15, 23, 42, 0.94) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.25) !important;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 20px rgba(20, 184, 166, 0.3) !important;
-  padding: 0.45rem 1rem !important;
+  background: rgba(15, 23, 42, 0.8) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6) !important;
+  padding: 0.2rem 0.5rem !important; /* 縮小內距 */
   border-radius: 999px !important;
   max-width: 96vw !important;
   overflow-x: auto !important;
   pointer-events: auto !important;
+  opacity: 0.45; /* 平時半透明，簡報底下內容清晰可見 */
+  transition: opacity 0.25s ease, transform 0.25s ease !important;
+  gap: 0.25rem !important; /* 按鈕微型間隙 */
+}
+
+/* 滑鼠滑過正下方工具列時，立即恢復 100% 清晰方便操作 */
+:fullscreen .deck-drawing-toolbar:hover,
+:-webkit-full-screen .deck-drawing-toolbar:hover,
+.deck-viewport-box:fullscreen .deck-drawing-toolbar:hover,
+.deck-viewport-box:-webkit-full-screen .deck-drawing-toolbar:hover,
+.deck-viewport-box.is-fullscreen .deck-drawing-toolbar:hover {
+  opacity: 1 !important;
+}
+
+/* 全螢幕下：所有按鈕圖示縮小至精緻尺寸，隱藏冗長文字 */
+:fullscreen .draw-tool-btn,
+:-webkit-full-screen .draw-tool-btn,
+.deck-viewport-box:fullscreen .draw-tool-btn,
+.deck-viewport-box:-webkit-full-screen .draw-tool-btn,
+.deck-viewport-box.is-fullscreen .draw-tool-btn {
+  padding: 0.18rem 0.38rem !important;
+  font-size: 0.75rem !important;
+  min-width: 25px !important;
+  height: 25px !important;
+  border-radius: 6px !important;
+  gap: 0.15rem !important;
+  justify-content: center !important;
+}
+
+:fullscreen .draw-tool-btn .tool-text,
+:-webkit-full-screen .draw-tool-btn .tool-text,
+.deck-viewport-box:fullscreen .draw-tool-btn .tool-text,
+.deck-viewport-box:-webkit-full-screen .draw-tool-btn .tool-text,
+.deck-viewport-box.is-fullscreen .draw-tool-btn .tool-text {
+  display: none !important; /* 隱藏文字標籤，全面圖示化縮小 */
+}
+
+/* 全螢幕色塊縮小 */
+:fullscreen .draw-color-chip,
+:-webkit-full-screen .draw-color-chip,
+.deck-viewport-box:fullscreen .draw-color-chip,
+.deck-viewport-box:-webkit-full-screen .draw-color-chip,
+.deck-viewport-box.is-fullscreen .draw-color-chip {
+  width: 12px !important;
+  height: 12px !important;
+}
+
+:fullscreen .deck-toolbar-divider,
+:-webkit-full-screen .deck-toolbar-divider,
+.deck-viewport-box:fullscreen .deck-toolbar-divider,
+.deck-viewport-box:-webkit-full-screen .deck-toolbar-divider,
+.deck-viewport-box.is-fullscreen .deck-toolbar-divider {
+  height: 14px !important;
+  margin: 0 0.1rem !important;
+}
+
+:fullscreen .fs-slide-counter,
+:-webkit-full-screen .fs-slide-counter,
+.deck-viewport-box:fullscreen .fs-slide-counter,
+.deck-viewport-box:-webkit-full-screen .fs-slide-counter,
+.deck-viewport-box.is-fullscreen .fs-slide-counter {
+  font-size: 0.72rem !important;
+  padding: 0 0.2rem !important;
+}
+
+/* 工具列一鍵收合狀態 (Minimization) */
+.deck-drawing-toolbar.is-minimized {
+  padding: 0.2rem 0.45rem !important;
+  opacity: 0.65 !important;
+  background: rgba(15, 23, 42, 0.9) !important;
+}
+.deck-drawing-toolbar.is-minimized > *:not(.fs-minimize-btn) {
+  display: none !important;
+}
+.deck-drawing-toolbar.is-minimized .fs-minimize-btn {
+  display: flex !important;
+  background: var(--primary) !important;
+  border-color: #5eead4 !important;
+  border-radius: 999px !important;
+  width: 28px !important;
+  height: 28px !important;
 }
 
 :fullscreen .fs-only,
