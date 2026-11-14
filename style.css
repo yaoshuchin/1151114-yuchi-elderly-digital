@@ -2048,8 +2048,90 @@ body[data-theme="dark"] .music-player-widget {
   object-fit: contain !important;
 }
 
-.deck-viewport-box:fullscreen .deck-drawing-toolbar {
-  bottom: 2rem !important;
+/* 全螢幕模式專屬：正下方固定簡報畫筆與功能工具列 */
+.fs-only {
+  display: none !important;
+}
+
+.deck-toolbar-divider {
+  width: 1px;
+  height: 22px;
+  background: rgba(255, 255, 255, 0.22);
+  margin: 0 0.15rem;
+  flex-shrink: 0;
+}
+
+.fs-nav-group {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.fs-slide-counter {
+  color: #f8fafc;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0 0.4rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.draw-toggle-btn.active {
+  background: var(--primary) !important;
+  border-color: #5eead4 !important;
+  color: #ffffff !important;
+  box-shadow: 0 0 10px rgba(20, 184, 166, 0.6) !important;
+}
+
+.fs-exit-btn {
+  background: rgba(239, 68, 68, 0.2) !important;
+  border-color: rgba(239, 68, 68, 0.45) !important;
+  color: #fca5a5 !important;
+}
+.fs-exit-btn:hover {
+  background: #ef4444 !important;
+  color: #ffffff !important;
+  border-color: #ef4444 !important;
+}
+
+/* 全螢幕時：工具列保證出現在正下方，且內建換頁、畫筆開關、顏色與退出等完整功能 */
+:fullscreen .deck-drawing-toolbar,
+:-webkit-full-screen .deck-drawing-toolbar,
+.deck-viewport-box:fullscreen .deck-drawing-toolbar,
+.deck-viewport-box:-webkit-full-screen .deck-drawing-toolbar,
+.deck-viewport-box.is-fullscreen .deck-drawing-toolbar {
+  display: flex !important;
+  position: fixed !important;
+  bottom: 1.5rem !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  z-index: 1000000 !important;
+  background: rgba(15, 23, 42, 0.94) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.25) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.7), 0 0 20px rgba(20, 184, 166, 0.3) !important;
+  padding: 0.45rem 1rem !important;
+  border-radius: 999px !important;
+  max-width: 96vw !important;
+  overflow-x: auto !important;
+  pointer-events: auto !important;
+}
+
+:fullscreen .fs-only,
+:-webkit-full-screen .fs-only,
+.deck-viewport-box:fullscreen .fs-only,
+.deck-viewport-box:-webkit-full-screen .fs-only,
+.deck-viewport-box.is-fullscreen .fs-only {
+  display: flex !important;
+}
+
+/* 全螢幕時的退出浮動按鈕同步支援 .is-fullscreen */
+.deck-viewport-box:-webkit-full-screen .fullscreen-exit-btn,
+.deck-viewport-box.is-fullscreen .fullscreen-exit-btn {
+  display: flex !important;
+  align-items: center;
+  gap: 0.35rem;
 }
 
 /* 全螢幕專屬退出浮動鈕 */

@@ -450,6 +450,11 @@ document.addEventListener('DOMContentLoaded', () => {
     elements.deckCategoryBadge.textContent = slideData.category;
     elements.deckSlideTitle.textContent = slideData.title;
 
+    const fsSlideCounter = document.getElementById('fsSlideCounter');
+    if (fsSlideCounter) {
+      fsSlideCounter.textContent = `${index} / ${state.totalSlides}`;
+    }
+
     if (elements.deckJumpInput) {
       elements.deckJumpInput.value = index;
     }
@@ -574,9 +579,30 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  document.addEventListener('fullscreenchange', () => {
+  function handleFullscreenStateChange() {
+    const isFs = Boolean(document.fullscreenElement || document.webkitFullscreenElement);
+    if (isFs) {
+      elements.viewportBox.classList.add('is-fullscreen');
+      elements.drawingToolbar.style.display = 'flex';
+      drawState.isActive = true;
+      canvas.classList.add('active');
+      const fsTogglePenBtn = document.getElementById('fsTogglePenBtn');
+      if (fsTogglePenBtn) fsTogglePenBtn.classList.add('active');
+      const fsSlideCounter = document.getElementById('fsSlideCounter');
+      if (fsSlideCounter) fsSlideCounter.textContent = `${state.currentSlideIndex} / ${state.totalSlides}`;
+    } else {
+      elements.viewportBox.classList.remove('is-fullscreen');
+      if (!elements.toggleDrawingBtn.classList.contains('active')) {
+        elements.drawingToolbar.style.display = 'none';
+        drawState.isActive = false;
+        canvas.classList.remove('active');
+      }
+    }
     setTimeout(resizeAnnotationCanvas, 250);
-  });
+  }
+
+  document.addEventListener('fullscreenchange', handleFullscreenStateChange);
+  document.addEventListener('webkitfullscreenchange', handleFullscreenStateChange);
 
   window.addEventListener('keydown', (e) => {
     if (state.currentMode === 'modeC' && document.activeElement.tagName !== 'INPUT') {
@@ -856,6 +882,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const btnDrawClear = document.getElementById('btnDrawClear');
   if (btnDrawClear) btnDrawClear.addEventListener('click', clearAnnotationCanvas);
+
+  // 全螢幕底部工具列專屬換頁與功能控制
+  const fsPrevBtn = document.getElementById('fsPrevBtn');
+  if (fsPrevBtn) fsPrevBtn.addEventListener('click', prevSlide);
+
+  const fsNextBtn = document.getElementById('fsNextBtn');
+  if (fsNextBtn) fsNextBtn.addEventListener('click', nextSlide);
+
+  const fsExitFullscreenBtn = document.getElementById('fsExitFullscreenBtn');
+  if (fsExitFullscreenBtn) {
+    fsExitFullscreenBtn.addEventListener('click', () => {
+      if (document.fullscreenElement || document.webkitFullscreenElement) {
+        if (document.exitFullscreen) document.exitFullscreen();
+        else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+      } else {
+        elements.viewportBox.classList.remove('is-fullscreen');
+      }
+    });
+  }
+
+  const fsTogglePenBtn = document.getElementById('fsTogglePenBtn');
+  if (fsTogglePenBtn) {
+    fsTogglePenBtn.addEventListener('click', () => {
+      drawState.isActive = !drawState.isActive;
+      if (drawState.isActive) {
+        fsTogglePenBtn.classList.add('active');
+        canvas.classList.add('active');
+      } else {
+        fsTogglePenBtn.classList.remove('active');
+        canvas.classList.remove('active');
+      }
+    });
+  }
+
+  // 防止點擊工具列按鈕時在背後畫布上誤劃線
+  if (elements.drawingToolbar) {
+    elements.drawingToolbar.addEventListener('mousedown', (e) => e.stopPropagation());
+    elements.drawingToolbar.addEventListener('touchstart', (e) => e.stopPropagation(), { passive: false });
+  }
 
   // ==========================================
   // 7. A 成果網頁展示藝廊

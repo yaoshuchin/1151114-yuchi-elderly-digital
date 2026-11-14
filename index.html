@@ -757,8 +757,25 @@
           <button class="deck-nav-arrow prev" id="arrowPrev" title="上一頁 (鍵盤 ← 或 PageUp)">❮</button>
           <button class="deck-nav-arrow next" id="arrowNext" title="下一頁 (鍵盤 → 或 空白鍵)">❯</button>
 
-          <!-- 螢幕畫筆與幾何工具列 (可開關) -->
+          <!-- 螢幕畫筆與幾何工具列 (一般模式可開關；全螢幕模式自動顯示於正下方) -->
           <div class="deck-drawing-toolbar" id="deckDrawingToolbar" style="display:none;">
+            <!-- 全螢幕快速換頁群組 (出現在正下方最左側) -->
+            <div class="fs-nav-group fs-only" id="fsNavGroup">
+              <button class="draw-tool-btn fs-nav-btn" id="fsPrevBtn" title="上一頁 (←)">◀</button>
+              <span class="fs-slide-counter" id="fsSlideCounter">1 / 25</span>
+              <button class="draw-tool-btn fs-nav-btn" id="fsNextBtn" title="下一頁 (→)">▶</button>
+            </div>
+
+            <div class="deck-toolbar-divider fs-only"></div>
+
+            <!-- 全螢幕畫筆模式開關按鈕 -->
+            <button class="draw-tool-btn draw-toggle-btn active" id="fsTogglePenBtn" title="切換畫筆繪圖模式">
+              <span id="fsTogglePenIcon">✏️</span> <span id="fsTogglePenText">畫筆</span>
+            </button>
+
+            <div class="deck-toolbar-divider"></div>
+
+            <!-- 繪圖工具群組 -->
             <button class="draw-tool-btn active" data-tool="pen" title="自由畫筆">✏️ 畫筆</button>
             <button class="draw-tool-btn" data-tool="highlighter" title="半透明螢光標記">🖍️ 螢光筆</button>
             <button class="draw-tool-btn" data-tool="line" title="直線標記">📏 直線</button>
@@ -778,10 +795,16 @@
             <!-- 粗細切換 -->
             <button class="draw-tool-btn" id="btnStrokeWidth" title="筆觸粗細切換">粗細: 中</button>
 
-            <!-- 操作鈕 -->
+            <!-- 擦拭、復原、清空 -->
             <button class="draw-tool-btn" id="btnDrawEraser" title="橡皮擦">🧹 擦拭</button>
             <button class="draw-tool-btn" id="btnDrawUndo" title="復原上一筆">↩️ 復原</button>
             <button class="draw-tool-btn" id="btnDrawClear" title="清除所有標記">🗑️ 清空</button>
+
+            <!-- 全螢幕退出按鈕 (正下方最右側) -->
+            <div class="deck-toolbar-divider fs-only"></div>
+            <button class="draw-tool-btn fs-only fs-exit-btn" id="fsExitFullscreenBtn" title="退出全螢幕 (Esc)">
+              ✖ 退出
+            </button>
           </div>
 
         </div>
