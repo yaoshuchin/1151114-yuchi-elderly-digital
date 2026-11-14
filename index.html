@@ -15,73 +15,78 @@
   <!-- ================= 頂部全域導覽列 ================= -->
   <header class="site-header">
     <div class="header-container">
-      <!-- 品牌標誌與標題 -->
-      <div class="brand-wrapper" id="brandLogoNav" title="點擊返回魚池數位中心首頁">
-        <div class="brand-logo-badge">魚</div>
-        <div class="brand-text-block">
-          <h1>南投縣樂齡學習數位示範體驗場域（魚池）</h1>
-          <div class="sub-title">教育部訪視輔導・魚池數位機會中心 (DOC)</div>
+      
+      <!-- 頂部列：左側為品牌識別與標題，右上方為字體/布景/音樂工具列 -->
+      <div class="header-top-row">
+        <!-- 品牌標誌與標題 -->
+        <div class="brand-wrapper" id="brandLogoNav" title="點擊返回魚池數位中心首頁">
+          <div class="brand-logo-badge">魚</div>
+          <div class="brand-text-block">
+            <h1>南投縣樂齡學習數位示範體驗場域（魚池）</h1>
+            <div class="sub-title">教育部訪視輔導・魚池數位機會中心 (DOC)</div>
+          </div>
+        </div>
+
+        <!-- 網頁右上方專屬工具列：字體選中/大/特大、布景選淺/深/綠/藍、水晶音樂4首 -->
+        <div class="header-tools" id="headerTools">
+          <!-- 字體選擇：中、大、特大 -->
+          <div class="control-group-box" title="調整字體大小">
+            <span class="control-label">字體:</span>
+            <button class="seg-btn active" data-font-val="md" id="btnFontMd">中</button>
+            <button class="seg-btn" data-font-val="lg" id="btnFontLg">大</button>
+            <button class="seg-btn" data-font-val="xl" id="btnFontXl">特大</button>
+          </div>
+
+          <!-- 布景選擇：淺、深、綠、藍 -->
+          <div class="control-group-box" title="切換布景色彩主題">
+            <span class="control-label">布景:</span>
+            <button class="theme-dot-btn light active" data-theme-val="light" title="淺色主題"></button>
+            <button class="theme-dot-btn dark" data-theme-val="dark" title="深色主題"></button>
+            <button class="theme-dot-btn green" data-theme-val="green" title="魚池茶園綠"></button>
+            <button class="theme-dot-btn blue" data-theme-val="blue" title="日月潭湛藍"></button>
+          </div>
+
+          <!-- 水晶音樂4首可選 (可關靜音) -->
+          <div class="music-player-widget" id="musicPlayerWidget" title="心靈水晶音樂播放器">
+            <button class="music-play-btn" id="musicPlayBtn" title="播放 / 暫停水晶音樂">▶</button>
+            <select class="music-select" id="musicTrackSelect" title="切換水晶音樂曲目">
+              <option value="0">🎵 1. 日月晨曦 (晨光鈴音)</option>
+              <option value="1">🍵 2. 魚池茶香 (深山禪鐘)</option>
+              <option value="2">🍃 3. 樂齡微風 (輕快圓舞曲)</option>
+              <option value="3">💖 4. 幸福陪伴 (古典卡農和弦)</option>
+            </select>
+            <span class="music-style-pill" id="musicStylePill">清晨高亢</span>
+            <button class="music-mute-btn" id="musicMuteBtn" title="切換靜音">🔊</button>
+          </div>
         </div>
       </div>
 
-      <!-- 四大核心功能分頁導覽按鈕 -->
-      <nav class="mode-nav-tabs" role="tablist">
-        <button class="mode-tab-btn active" data-mode="modeCenter" role="tab" id="tabModeCenter">
-          <span>🏛️ 魚池數位中心</span>
-          <span class="badge-pill" style="background:#fef3c7; color:#b45309;">地圖·影音</span>
-        </button>
-        <button class="mode-tab-btn" data-mode="modeA" role="tab" id="tabModeA">
-          <span>🌟 A. 成果網頁</span>
-          <span class="badge-pill">亮點總覽</span>
-        </button>
-        <button class="mode-tab-btn" data-mode="modeB" role="tab" id="tabModeB">
-          <span>🎯 B. 問答模式</span>
-          <span class="badge-pill">委員考題</span>
-        </button>
-        <button class="mode-tab-btn" data-mode="modeC" role="tab" id="tabModeC">
-          <span>📽️ C. 簡報模式</span>
-          <span class="badge-pill">畫筆·全螢幕</span>
-        </button>
-        <button class="mode-tab-btn" data-mode="modeQR" role="tab" id="tabModeQR">
-          <span>📱 QR</span>
-          <span class="badge-pill" style="background:#e0f2fe; color:#0369a1;">二維條碼·縮網址</span>
-        </button>
-      </nav>
-
-      <!-- 多功能工具列：字體選中/大/特大、布景選淺/深/綠/藍、水晶音樂4首 -->
-      <div class="header-tools" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
-        
-        <!-- 字體選擇：中、大、特大 -->
-        <div class="control-group-box" title="調整字體大小">
-          <span class="control-label">字體:</span>
-          <button class="seg-btn active" data-font-val="md" id="btnFontMd">中</button>
-          <button class="seg-btn" data-font-val="lg" id="btnFontLg">大</button>
-          <button class="seg-btn" data-font-val="xl" id="btnFontXl">特大</button>
-        </div>
-
-        <!-- 布景選擇：淺、深、綠、藍 -->
-        <div class="control-group-box" title="切換布景色彩主題">
-          <span class="control-label">布景:</span>
-          <button class="theme-dot-btn light active" data-theme-val="light" title="淺色主題"></button>
-          <button class="theme-dot-btn dark" data-theme-val="dark" title="深色主題"></button>
-          <button class="theme-dot-btn green" data-theme-val="green" title="魚池茶園綠"></button>
-          <button class="theme-dot-btn blue" data-theme-val="blue" title="日月潭湛藍"></button>
-        </div>
-
-        <!-- 水晶音樂4首可選 (可關靜音) -->
-        <div class="music-player-widget" id="musicPlayerWidget" title="心靈水晶音樂播放器">
-          <button class="music-play-btn" id="musicPlayBtn" title="播放 / 暫停水晶音樂">▶</button>
-          <select class="music-select" id="musicTrackSelect" title="切換水晶音樂曲目">
-            <option value="0">🎵 1. 日月晨曦 (晨光鈴音)</option>
-            <option value="1">🍵 2. 魚池茶香 (深山禪鐘)</option>
-            <option value="2">🍃 3. 樂齡微風 (輕快圓舞曲)</option>
-            <option value="3">💖 4. 幸福陪伴 (古典卡農和弦)</option>
-          </select>
-          <span class="music-style-pill" id="musicStylePill">清晨高亢</span>
-          <button class="music-mute-btn" id="musicMuteBtn" title="切換靜音">🔊</button>
-        </div>
-
+      <!-- 下方導覽列：核心功能分頁導覽按鈕 -->
+      <div class="header-nav-row">
+        <nav class="mode-nav-tabs" role="tablist">
+          <button class="mode-tab-btn active" data-mode="modeCenter" role="tab" id="tabModeCenter">
+            <span>🏛️ 魚池數位中心</span>
+            <span class="badge-pill" style="background:#fef3c7; color:#b45309;">地圖·影音</span>
+          </button>
+          <button class="mode-tab-btn" data-mode="modeA" role="tab" id="tabModeA">
+            <span>🌟 A. 成果網頁</span>
+            <span class="badge-pill">亮點總覽</span>
+          </button>
+          <button class="mode-tab-btn" data-mode="modeB" role="tab" id="tabModeB">
+            <span>🎯 B. 問答模式</span>
+            <span class="badge-pill">委員考題</span>
+          </button>
+          <button class="mode-tab-btn" data-mode="modeC" role="tab" id="tabModeC">
+            <span>📽️ C. 簡報模式</span>
+            <span class="badge-pill">畫筆·全螢幕</span>
+          </button>
+          <button class="mode-tab-btn" data-mode="modeQR" role="tab" id="tabModeQR">
+            <span>📱 QR</span>
+            <span class="badge-pill" style="background:#e0f2fe; color:#0369a1;">二維條碼·縮網址</span>
+          </button>
+        </nav>
       </div>
+
     </div>
   </header>
 
