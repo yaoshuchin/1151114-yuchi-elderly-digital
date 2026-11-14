@@ -1,6 +1,6 @@
 // ========================================================
 // 南投縣樂齡學習數位示範體驗場域（魚池）- 核心應用邏輯
-// 包含：四大分頁、字體選擇、主題布景、水晶音樂合成器、簡報螢幕畫筆幾何標記
+// 包含：四大分頁、字體選擇、主題布景、4首風格迥異水晶音樂合成器、簡報全螢幕最適化與螢幕畫筆
 // ========================================================
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     isAutoPlaying: false,
     fontSize: localStorage.getItem('yuchi_pref_font') || 'md',      // 'md' | 'lg' | 'xl'
     theme: localStorage.getItem('yuchi_pref_theme') || 'light',     // 'light' | 'dark' | 'green' | 'blue'
+    isFitViewport: false,
     activeQaCategory: 'all',
     qaSearchQuery: '',
     currentDrillIndex: 0,
@@ -29,10 +30,12 @@ document.addEventListener('DOMContentLoaded', () => {
       modeB: document.getElementById('view-modeB'),
       modeC: document.getElementById('view-modeC')
     },
-    // 字體與布景按鈕
+    // 字體與布景
     fontBtns: document.querySelectorAll('.seg-btn[data-font-val]'),
     themeBtns: document.querySelectorAll('.theme-dot-btn[data-theme-val]'),
-    // C 簡報模式元素
+    // C 簡報模式
+    deckContainer: document.getElementById('deckContainer'),
+    viewportBox: document.getElementById('deckViewportBox'),
     deckSlideImg: document.getElementById('deckSlideImg'),
     deckSlideBadge: document.getElementById('deckSlideBadge'),
     deckCategoryBadge: document.getElementById('deckCategoryBadge'),
@@ -49,20 +52,21 @@ document.addEventListener('DOMContentLoaded', () => {
     thumbnailTrack: document.getElementById('thumbnailTrack'),
     autoPlayBtn: document.getElementById('autoPlayBtn'),
     deckFullscreenBtn: document.getElementById('deckFullscreenBtn'),
-    viewportBox: document.getElementById('deckViewportBox'),
-    // 畫筆元素
+    btnExitFullscreen: document.getElementById('btnExitFullscreen'),
+    btnFitScreen: document.getElementById('btnFitScreen'),
+    // 畫筆
     toggleDrawingBtn: document.getElementById('toggleDrawingBtn'),
     drawingToolbar: document.getElementById('deckDrawingToolbar'),
     annotationCanvas: document.getElementById('annotationCanvas'),
-    // A 成果網頁元素
+    // A 成果網頁
     galleryGrid: document.getElementById('galleryGrid'),
-    // B 問答模式元素
+    // B 問答模式
     qaListContainer: document.getElementById('qaListContainer'),
     qaDrillContainer: document.getElementById('qaDrillContainer'),
     qaSearchInput: document.getElementById('qaSearchInput'),
     catFilterBtns: document.querySelectorAll('.cat-filter-btn'),
     qaModeSwitchBtns: document.querySelectorAll('.qa-mode-btn'),
-    // 閃卡元素
+    // 閃卡
     drillBadge: document.getElementById('drillBadge'),
     drillCounter: document.getElementById('drillCounter'),
     drillQuestion: document.getElementById('drillQuestion'),
@@ -74,9 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
     btnRevealAnswer: document.getElementById('btnRevealAnswer'),
     btnDrillPrev: document.getElementById('btnDrillPrev'),
     btnDrillNext: document.getElementById('btnDrillNext'),
-    // 水晶音樂元素
+    // 水晶音樂
     musicPlayBtn: document.getElementById('musicPlayBtn'),
     musicTrackSelect: document.getElementById('musicTrackSelect'),
+    musicStylePill: document.getElementById('musicStylePill'),
     musicMuteBtn: document.getElementById('musicMuteBtn')
   };
 
@@ -86,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
   function switchMode(modeId) {
     state.currentMode = modeId;
 
-    // 更新導覽列按鈕 active
     elements.modeBtns.forEach(btn => {
       if (btn.dataset.mode === modeId) {
         btn.classList.add('active');
@@ -95,7 +99,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // 切換視圖顯隱
     Object.keys(elements.views).forEach(key => {
       if (elements.views[key]) {
         if (key === modeId) {
@@ -108,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // 若切換到 C 簡報模式，更新該頁並適應畫布
     if (modeId === 'modeC') {
       renderSlide(state.currentSlideIndex);
       setTimeout(resizeAnnotationCanvas, 200);
@@ -176,7 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setTheme(state.theme);
 
   // ==========================================
-  // 4. 水晶音樂合成器 (Web Audio API - 4首可選+靜音)
+  // 4. 水晶音樂合成器：4首風格迥異、鮮明可辨之演奏曲
   // ==========================================
   class CrystalSynthesizer {
     constructor() {
@@ -188,62 +190,68 @@ document.addEventListener('DOMContentLoaded', () => {
       this.timer = null;
       this.step = 0;
 
-      // 4 首空靈水晶音樂曲目音階與音符陣列
+      // 4 首風格迥異的水晶音樂（節奏、音階、音色與旋律皆獨立設計）
       this.tracks = [
         {
           name: "日月晨曦",
-          bpm: 66,
-          scale: [
-            [261.63, 392.00, 523.25], // C4, G4, C5
-            [329.63, 440.00, 659.25], // E4, A4, E5
-            [392.00, 523.25, 783.99], // G4, C5, G5
-            [440.00, 659.25, 880.00], // A4, E5, A5
-            [523.25, 783.99, 1046.50],// C5, G5, C6
-            [440.00, 659.25, 880.00],
-            [392.00, 523.25, 659.25],
-            [329.63, 392.00, 523.25]
+          style: "清晨高亢",
+          bpm: 78,
+          playMode: "arpeggio",
+          filterFreq: 3600,
+          harmonicRatio: 2.756,
+          decay: 1.4,
+          melody: [
+            523.25, 659.25, 783.99, 1046.50, 880.00, 783.99, 659.25, 523.25,
+            587.33, 659.25, 880.00, 1046.50, 1174.66, 1046.50, 880.00, 783.99
           ]
         },
         {
           name: "魚池茶香",
-          bpm: 60,
-          scale: [
-            [293.66, 440.00, 587.33], // D4, A4, D5
-            [349.23, 523.25, 698.46], // F4, C5, F5
-            [392.00, 587.33, 783.99], // G4, D5, G5
-            [440.00, 659.25, 880.00], // A4, E5, A5
-            [523.25, 698.46, 1046.50],// C5, F5, C6
-            [440.00, 587.33, 880.00],
-            [349.23, 440.00, 698.46],
-            [293.66, 392.00, 587.33]
+          style: "深山禪鐘",
+          bpm: 46,
+          playMode: "deep-zen",
+          filterFreq: 1400,
+          harmonicRatio: 2.01,
+          decay: 3.6,
+          melody: [
+            293.66, 440.00, 349.23, 523.25, 440.00, 392.00, 349.23, 293.66,
+            220.00, 329.63, 293.66, 440.00, 392.00, 349.23, 293.66, 220.00
           ]
         },
         {
           name: "樂齡微風",
-          bpm: 64,
-          scale: [
-            [392.00, 493.88, 783.99], // G4, B4, G5
-            [440.00, 587.33, 880.00], // A4, D5, A5
-            [493.88, 659.25, 987.77], // B4, E5, B5
-            [587.33, 783.99, 1174.66],// D5, G5, D6
-            [659.25, 880.00, 1318.51],// E5, A5, E6
-            [493.88, 659.25, 987.77],
-            [440.00, 587.33, 783.99],
-            [392.00, 493.88, 587.33]
-          ]
+          style: "三拍圓舞",
+          bpm: 106,
+          playMode: "waltz",
+          filterFreq: 3000,
+          harmonicRatio: 3.01,
+          decay: 1.6,
+          waltzBass: [196.00, 293.66, 261.63, 196.00],
+          waltzChord: [
+            [493.88, 587.33],
+            [587.33, 783.99],
+            [523.25, 659.25],
+            [493.88, 587.33]
+          ],
+          melody: [783.99, 659.25, 587.33, 493.88, 523.25, 587.33, 783.99, 880.00]
         },
         {
           name: "幸福陪伴",
+          style: "卡農和弦",
           bpm: 58,
-          scale: [
-            [349.23, 440.00, 698.46], // F4, A4, F5
-            [392.00, 523.25, 783.99], // G4, C5, G5
-            [440.00, 587.33, 880.00], // A4, D5, A5
-            [523.25, 659.25, 1046.50],// C5, E5, C6
-            [587.33, 783.99, 1174.66],// D5, G5, D6
-            [523.25, 659.25, 880.00],
-            [440.00, 523.25, 698.46],
-            [349.23, 440.00, 523.25]
+          playMode: "canon",
+          filterFreq: 2600,
+          harmonicRatio: 2.5,
+          decay: 2.2,
+          chords: [
+            [261.63, 329.63, 392.00, 523.25], // C 大調
+            [196.00, 293.66, 392.00, 493.88], // G 大調
+            [220.00, 261.63, 329.63, 440.00], // Am 小調
+            [164.81, 246.94, 329.63, 392.00], // Em 小調
+            [174.61, 261.63, 349.23, 440.00], // F 大調
+            [261.63, 329.63, 392.00, 523.25], // C 大調
+            [174.61, 261.63, 349.23, 440.00], // F 大調
+            [196.00, 293.66, 392.00, 493.88]  // G 大調
           ]
         }
       ];
@@ -259,35 +267,31 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    playCrystalBell(freq, timeOffset = 0, duration = 2.4) {
+    playTone(freq, timeOffset = 0, duration = 2.0, gainScale = 1.0) {
       if (this.isMuted || !this.ctx) return;
-
+      const track = this.tracks[this.currentTrack];
       const now = this.ctx.currentTime + timeOffset;
 
-      // 主音振盪器 (Sine)
       const osc1 = this.ctx.createOscillator();
       osc1.type = 'sine';
       osc1.frequency.setValueAtTime(freq, now);
 
-      // 空靈泛音振盪器 (Sine at inharmonic freq 2.76x)
       const osc2 = this.ctx.createOscillator();
       osc2.type = 'sine';
-      osc2.frequency.setValueAtTime(freq * 2.756, now);
+      osc2.frequency.setValueAtTime(freq * track.harmonicRatio, now);
 
-      // 低通濾波器營造溫潤感
       const filter = this.ctx.createBiquadFilter();
       filter.type = 'lowpass';
-      filter.frequency.setValueAtTime(3200, now);
+      filter.frequency.setValueAtTime(track.filterFreq, now);
 
-      // 泛音增益
       const gain2 = this.ctx.createGain();
-      gain2.gain.setValueAtTime(0.25, now);
+      gain2.gain.setValueAtTime(0.22, now);
       osc2.connect(gain2);
 
-      // 總包絡線增益 (Envelope)
       const masterGain = this.ctx.createGain();
+      const peakVol = this.volume * gainScale;
       masterGain.gain.setValueAtTime(0, now);
-      masterGain.gain.linearRampToValueAtTime(this.volume, now + 0.02);
+      masterGain.gain.linearRampToValueAtTime(peakVol, now + 0.015);
       masterGain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
       osc1.connect(filter);
@@ -305,7 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
       this.init();
       this.isPlaying = true;
       this.step = 0;
-      this.scheduleNext();
+      this.scheduleLoop();
     }
 
     stop() {
@@ -316,25 +320,70 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    scheduleNext() {
+    scheduleLoop() {
       if (!this.isPlaying) return;
-
       const track = this.tracks[this.currentTrack];
-      const chord = track.scale[this.step % track.scale.length];
 
-      // 琶音演奏水晶音
-      chord.forEach((freq, idx) => {
-        this.playCrystalBell(freq, idx * 0.16, 2.5);
-      });
+      if (track.playMode === 'arpeggio') {
+        // 曲目 1：日月晨曦（高亢流暢晶鈴）
+        const freq = track.melody[this.step % track.melody.length];
+        this.playTone(freq, 0, track.decay, 1.0);
+        this.step++;
+        const interval = (60 / track.bpm) * 1000 * 0.55;
+        this.timer = setTimeout(() => this.scheduleLoop(), interval);
 
-      this.step++;
-      const intervalMs = (60 / track.bpm) * 1000 * 1.5;
-      this.timer = setTimeout(() => this.scheduleNext(), intervalMs);
+      } else if (track.playMode === 'deep-zen') {
+        // 曲目 2：魚池茶香（深沉禪音、呼吸般緩慢悠長）
+        const freq = track.melody[this.step % track.melody.length];
+        this.playTone(freq, 0, track.decay, 1.25);
+        this.step++;
+        const interval = (60 / track.bpm) * 1000 * 1.5;
+        this.timer = setTimeout(() => this.scheduleLoop(), interval);
+
+      } else if (track.playMode === 'waltz') {
+        // 曲目 3：樂齡微風（標準三拍子圓舞曲：蹦-恰-恰）
+        const measureIdx = Math.floor(this.step / 3) % track.waltzBass.length;
+        const beatInMeasure = this.step % 3;
+
+        if (beatInMeasure === 0) {
+          // 第 1 拍：低音鐘鳴 + 高音主旋律
+          const bass = track.waltzBass[measureIdx];
+          const mel = track.melody[measureIdx % track.melody.length];
+          this.playTone(bass, 0, 1.8, 1.2);
+          this.playTone(mel, 0.05, 1.5, 0.9);
+        } else {
+          // 第 2、3 拍：輕柔雙音伴奏 (恰、恰)
+          const chord = track.waltzChord[measureIdx];
+          this.playTone(chord[0], 0, 0.9, 0.5);
+          this.playTone(chord[1], 0.02, 0.9, 0.5);
+        }
+
+        this.step++;
+        const interval = (60 / track.bpm) * 1000;
+        this.timer = setTimeout(() => this.scheduleLoop(), interval);
+
+      } else if (track.playMode === 'canon') {
+        // 曲目 4：幸福陪伴（古典卡農和弦琶音）
+        const chord = track.chords[this.step % track.chords.length];
+        chord.forEach((freq, idx) => {
+          this.playTone(freq, idx * 0.18, track.decay, 0.85);
+        });
+        this.step++;
+        const interval = (60 / track.bpm) * 1000 * 1.6;
+        this.timer = setTimeout(() => this.scheduleLoop(), interval);
+      }
     }
 
     setTrack(index) {
       this.currentTrack = index;
       this.step = 0;
+      if (elements.musicStylePill) {
+        elements.musicStylePill.textContent = this.tracks[index].style;
+      }
+      if (this.isPlaying) {
+        if (this.timer) clearTimeout(this.timer);
+        this.scheduleLoop();
+      }
     }
 
     toggleMute() {
@@ -345,7 +394,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const crystalMusic = new CrystalSynthesizer();
 
-  // 音樂播放/暫停事件
   if (elements.musicPlayBtn) {
     elements.musicPlayBtn.addEventListener('click', () => {
       if (!crystalMusic.isPlaying) {
@@ -362,7 +410,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 切換曲目
   if (elements.musicTrackSelect) {
     elements.musicTrackSelect.addEventListener('change', (e) => {
       const idx = parseInt(e.target.value, 10);
@@ -370,7 +417,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 靜音切換
   if (elements.musicMuteBtn) {
     elements.musicMuteBtn.addEventListener('click', () => {
       const muted = crystalMusic.toggleMute();
@@ -380,7 +426,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 5. 簡報模式核心邏輯
+  // 5. 簡報模式核心邏輯與全螢幕最適化
   // ==========================================
   function renderSlide(index) {
     if (index < 1) index = 1;
@@ -390,7 +436,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const slideData = window.SLIDES_DATA[index - 1];
     if (!slideData) return;
 
-    // 換頁時自動清除畫筆標記，讓新投影片清晰展示
     clearAnnotationCanvas();
 
     elements.deckSlideImg.src = slideData.image;
@@ -413,7 +458,6 @@ document.addEventListener('DOMContentLoaded', () => {
       elements.deckNotesContent.innerHTML = `<strong>【本頁提報重點】</strong>\n• ${outline}`;
     }
 
-    // 縮圖更新
     const thumbItems = elements.thumbnailTrack.querySelectorAll('.thumb-item');
     thumbItems.forEach((item, idx) => {
       if (idx + 1 === index) {
@@ -454,10 +498,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // 視窗最適化開關（免滾動完整看到全部投影片畫面）
+  if (elements.btnFitScreen) {
+    elements.btnFitScreen.addEventListener('click', () => {
+      state.isFitViewport = !state.isFitViewport;
+      if (state.isFitViewport) {
+        elements.deckContainer.classList.add('fit-viewport');
+        elements.btnFitScreen.classList.add('active');
+        elements.btnFitScreen.innerHTML = '📐 標準寬幅';
+      } else {
+        elements.deckContainer.classList.remove('fit-viewport');
+        elements.btnFitScreen.classList.remove('active');
+        elements.btnFitScreen.innerHTML = '📐 視窗最適';
+      }
+      setTimeout(resizeAnnotationCanvas, 200);
+    });
+  }
+
   if (elements.toggleNotesBtn) {
     elements.toggleNotesBtn.addEventListener('click', () => {
       elements.deckNotesPanel.classList.toggle('active');
       elements.toggleNotesBtn.classList.toggle('active');
+      setTimeout(resizeAnnotationCanvas, 200);
     });
   }
 
@@ -483,18 +545,33 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  if (elements.deckFullscreenBtn) {
-    elements.deckFullscreenBtn.addEventListener('click', () => {
-      if (!document.fullscreenElement) {
-        elements.viewportBox.requestFullscreen().catch(err => {
-          console.warn('Fullscreen error:', err);
-        });
-      } else {
+  // 全螢幕放映
+  function enterFullscreen() {
+    if (!document.fullscreenElement) {
+      if (elements.viewportBox.requestFullscreen) {
+        elements.viewportBox.requestFullscreen();
+      } else if (elements.viewportBox.webkitRequestFullscreen) {
+        elements.viewportBox.webkitRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
         document.exitFullscreen();
       }
-      setTimeout(resizeAnnotationCanvas, 300);
+    }
+  }
+
+  if (elements.deckFullscreenBtn) {
+    elements.deckFullscreenBtn.addEventListener('click', enterFullscreen);
+  }
+  if (elements.btnExitFullscreen) {
+    elements.btnExitFullscreen.addEventListener('click', () => {
+      if (document.fullscreenElement) document.exitFullscreen();
     });
   }
+
+  document.addEventListener('fullscreenchange', () => {
+    setTimeout(resizeAnnotationCanvas, 250);
+  });
 
   window.addEventListener('keydown', (e) => {
     if (state.currentMode === 'modeC' && document.activeElement.tagName !== 'INPUT') {
@@ -506,7 +583,7 @@ document.addEventListener('DOMContentLoaded', () => {
         prevSlide();
       } else if (e.key.toLowerCase() === 'f') {
         e.preventDefault();
-        if (elements.deckFullscreenBtn) elements.deckFullscreenBtn.click();
+        enterFullscreen();
       } else if (e.key.toLowerCase() === 'n') {
         e.preventDefault();
         if (elements.toggleNotesBtn) elements.toggleNotesBtn.click();
@@ -542,9 +619,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   const drawState = {
     isActive: false,
-    currentTool: 'pen', // 'pen' | 'highlighter' | 'line' | 'arrow' | 'rect' | 'circle' | 'eraser'
+    currentTool: 'pen',
     color: '#ef4444',
-    widthLevel: 1,      // 0: thin, 1: mid, 2: thick
+    widthLevel: 1,
     widths: {
       pen: [3, 6, 12],
       highlighter: [14, 24, 38],
@@ -568,7 +645,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!canvas || !elements.viewportBox) return;
     const rect = elements.viewportBox.getBoundingClientRect();
     if (rect.width > 0 && rect.height > 0) {
-      // 保持繪製內容
       const tempImg = ctx.getImageData(0, 0, canvas.width, canvas.height);
       canvas.width = rect.width;
       canvas.height = rect.height;
@@ -609,7 +685,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
-  // 繪製幾何箭頭輔助函數
   function drawArrow(context, fromx, fromy, tox, toy) {
     const headlen = 16;
     const angle = Math.atan2(toy - fromy, tox - fromx);
@@ -675,7 +750,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
         ctx.globalAlpha = 1.0;
       } else {
-        // 幾何圖形 (復原初始畫面並預覽即時圖形)
         ctx.putImageData(drawState.snapshot, 0, 0);
         ctx.globalCompositeOperation = 'source-over';
         ctx.strokeStyle = drawState.color;
@@ -720,7 +794,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('touchend', onEnd);
   }
 
-  // 畫筆開關鈕
   if (elements.toggleDrawingBtn) {
     elements.toggleDrawingBtn.addEventListener('click', () => {
       drawState.isActive = !drawState.isActive;
@@ -739,7 +812,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 畫筆工具切換 (pen, highlighter, line, arrow, rect, circle)
   document.querySelectorAll('.draw-tool-btn[data-tool]').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.draw-tool-btn[data-tool]').forEach(b => b.classList.remove('active'));
@@ -748,7 +820,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 顏色切換
   document.querySelectorAll('.draw-color-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       document.querySelectorAll('.draw-color-chip').forEach(c => c.classList.remove('active'));
@@ -757,7 +828,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 粗細切換
   const btnStrokeWidth = document.getElementById('btnStrokeWidth');
   if (btnStrokeWidth) {
     btnStrokeWidth.addEventListener('click', () => {
@@ -767,7 +837,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 橡皮擦、復原、清空
   const btnDrawEraser = document.getElementById('btnDrawEraser');
   if (btnDrawEraser) {
     btnDrawEraser.addEventListener('click', () => {
@@ -976,81 +1045,15 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ==========================================
-  // 初始化渲染
+  // 9. 初始化啟動
   // ==========================================
   buildThumbnailTrack();
   buildModeAGallery();
   renderQaList();
   renderSlide(1);
 
-  // 門禁密碼檢查 (密碼: 049)
-  checkAuthOnLoad();
-  const lockBtn = document.getElementById('lockNavBtn');
-  if (lockBtn) {
-    lockBtn.addEventListener('click', window.lockSystem);
-  }
-
-  // 支援 URL Hash 路由 (如 #modeCenter, #modeA, #modeB, #modeC)
   const hash = window.location.hash.replace('#', '');
   if (hash === 'modeA' || hash === 'modeB' || hash === 'modeC' || hash === 'modeCenter') {
     switchMode(hash);
   }
 });
-
-// ==========================================
-// 門禁密碼驗證邏輯 (密碼: 049)
-// ==========================================
-const CORRECT_PASSWORD = '049';
-const AUTH_STORAGE_KEY = 'yuchi_digital_eval_auth';
-
-function checkAuthOnLoad() {
-  const overlay = document.getElementById('auth-overlay');
-  if (!overlay) return;
-  const isAuth = sessionStorage.getItem(AUTH_STORAGE_KEY) === 'true';
-  if (isAuth) {
-    overlay.classList.add('unlocked');
-  } else {
-    overlay.classList.remove('unlocked');
-    const input = document.getElementById('authPasswordInput');
-    if (input) setTimeout(() => input.focus(), 300);
-  }
-}
-
-window.handleAuthSubmit = function(e) {
-  if (e) e.preventDefault();
-  const input = document.getElementById('authPasswordInput');
-  const overlay = document.getElementById('auth-overlay');
-  const authBox = document.getElementById('authBox');
-  const errorMsg = document.getElementById('authErrorMsg');
-
-  if (!input) return;
-  const val = input.value.trim();
-
-  if (val === CORRECT_PASSWORD) {
-    sessionStorage.setItem(AUTH_STORAGE_KEY, 'true');
-    if (errorMsg) errorMsg.classList.remove('visible');
-    if (overlay) overlay.classList.add('unlocked');
-  } else {
-    if (errorMsg) errorMsg.classList.add('visible');
-    if (authBox) {
-      authBox.classList.remove('shake-animation');
-      void authBox.offsetWidth; // trigger reflow
-      authBox.classList.add('shake-animation');
-    }
-    input.value = '';
-    input.focus();
-  }
-};
-
-window.lockSystem = function() {
-  sessionStorage.removeItem(AUTH_STORAGE_KEY);
-  const overlay = document.getElementById('auth-overlay');
-  const input = document.getElementById('authPasswordInput');
-  const errorMsg = document.getElementById('authErrorMsg');
-  if (errorMsg) errorMsg.classList.remove('visible');
-  if (overlay) overlay.classList.remove('unlocked');
-  if (input) {
-    input.value = '';
-    setTimeout(() => input.focus(), 300);
-  }
-};

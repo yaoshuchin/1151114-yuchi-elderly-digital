@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>教育部南投縣樂齡學習數位示範體驗場域（魚池）- 數位中心與訪視輔導展示系統</title>
+  <title>教育部南投縣樂齡學習數位示範體驗場域（魚池）- 魚池數位中心與訪視輔導展示系統</title>
   <meta name="description" content="教育部南投縣樂齡學習數位示範體驗場域（魚池）、魚池數位中心成果展示、地圖、影音、訪視問答與線上簡報系統">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,25 +11,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body data-theme="light" data-font="md">
-
-  <!-- ================= 門禁密碼驗證遮罩 (密碼: 049) ================= -->
-  <div id="auth-overlay">
-    <div class="auth-box" id="authBox">
-      <div class="auth-lock-icon">🔒</div>
-      <h2 class="auth-title">南投縣樂齡學習數位示範場域</h2>
-      <div class="auth-subtitle">魚池數位中心・第二次訪視輔導展示系統<br>請輸入訪問通行密碼</div>
-      <form id="authForm" class="auth-form" onsubmit="handleAuthSubmit(event)">
-        <div class="auth-input-wrapper">
-          <input type="password" id="authPasswordInput" class="auth-input" placeholder="請輸入密碼 (049)" maxlength="10" autofocus autocomplete="off">
-        </div>
-        <button type="submit" class="auth-submit-btn">驗證並進入系統 ➔</button>
-        <div id="authErrorMsg" class="auth-error-msg">⚠️ 密碼錯誤，請重新輸入！</div>
-      </form>
-      <div style="margin-top: 1.25rem; font-size: 0.8rem; color: #94a3b8;">
-        南投在地通行驗證 (區碼 049)
-      </div>
-    </div>
-  </div>
 
   <!-- ================= 頂部全域導覽列 ================= -->
   <header class="site-header">
@@ -59,11 +40,11 @@
         </button>
         <button class="mode-tab-btn" data-mode="modeC" role="tab" id="tabModeC">
           <span>📽️ C. 簡報模式</span>
-          <span class="badge-pill">畫筆·25頁</span>
+          <span class="badge-pill">畫筆·全螢幕</span>
         </button>
       </nav>
 
-      <!-- 多功能工具列：字體選中/大/特大、布景選淺/深/綠/藍、水晶音樂4首、密碼鎖定 -->
+      <!-- 多功能工具列：字體選中/大/特大、布景選淺/深/綠/藍、水晶音樂4首 -->
       <div class="header-tools" style="display:flex; align-items:center; gap:0.6rem; flex-wrap:wrap;">
         
         <!-- 字體選擇：中、大、特大 -->
@@ -87,18 +68,14 @@
         <div class="music-player-widget" id="musicPlayerWidget" title="心靈水晶音樂播放器">
           <button class="music-play-btn" id="musicPlayBtn" title="播放 / 暫停水晶音樂">▶</button>
           <select class="music-select" id="musicTrackSelect" title="切換水晶音樂曲目">
-            <option value="0">🎵 1. 日月晨曦</option>
-            <option value="1">🍵 2. 魚池茶香</option>
-            <option value="2">🍃 3. 樂齡微風</option>
-            <option value="3">💖 4. 幸福陪伴</option>
+            <option value="0">🎵 1. 日月晨曦 (晨光鈴音)</option>
+            <option value="1">🍵 2. 魚池茶香 (深山禪鐘)</option>
+            <option value="2">🍃 3. 樂齡微風 (輕快圓舞曲)</option>
+            <option value="3">💖 4. 幸福陪伴 (古典卡農和弦)</option>
           </select>
+          <span class="music-style-pill" id="musicStylePill">清晨高亢</span>
           <button class="music-mute-btn" id="musicMuteBtn" title="切換靜音">🔊</button>
         </div>
-
-        <!-- 鎖定按鈕 -->
-        <button class="lock-nav-btn" id="lockNavBtn" title="重新鎖定系統（需輸入密碼 049）">
-          🔒 鎖定
-        </button>
 
       </div>
     </div>
@@ -121,7 +98,7 @@
             縮減偏鄉高齡數位落差・結合日月潭在地文化與茶香特色・青年手把手陪伴長者學科技
           </p>
           <div class="hero-meta-row">
-            <div class="hero-meta-item">📍 <strong>中心地址：</strong>南投縣魚池鄉魚池村魚池街354巷2號2樓（魚池國小共學場域）</div>
+            <div class="hero-meta-item">📍 <strong>中心地址：</strong>南投縣魚池鄉魚池村魚池街354巷2號2樓（魚池國小活動中心共學場域）</div>
             <div class="hero-meta-item">☎️ <strong>聯絡電話：</strong>(049) 289-9078</div>
             <div class="hero-meta-item">⏰ <strong>諮詢時段：</strong>每週二上午 9:00–12:00（常態駐點與一對一服務）</div>
           </div>
@@ -245,12 +222,12 @@
           </div>
         </div>
 
-        <!-- 影音專區 (收集真實影音與 YouTube) -->
+        <!-- 影音專區 (真實有效之 YouTube 影音嵌入與播放) -->
         <div>
           <div class="section-header">
             <div>
               <h2>🎬 魚池數位中心精彩影音與課程成果</h2>
-              <div class="sub-desc">收錄南投縣魚池數位機會中心 (DOC) 官方頻道與教育部訪視專題影音</div>
+              <div class="sub-desc">收錄南投縣魚池數位機會中心 (DOC) 官方頻道與教育部訪視專題影音（可直接於網頁觀看或點選開啟）</div>
             </div>
             <div>
               <a href="https://www.youtube.com/results?search_query=%E5%8D%97%E6%8A%95%E7%B8%A3%E9%AD%9A%E6%B1%A0%E6%95%B8%E4%BD%8D%E6%A9%9F%E6%9C%83%E4%B8%AD%E5%BF%83" target="_blank" rel="noopener noreferrer" class="jump-slide-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:0.35rem;">
@@ -260,54 +237,101 @@
           </div>
 
           <div class="video-showcase-grid">
-            <!-- 影音 1: AI 虛擬主播與農產推廣 -->
+            <!-- 影音 1: AI 虛擬主播與農產推廣 (fVBTS-hqiIA) -->
             <div class="video-card">
               <div class="video-frame-box">
-                <iframe src="https://www.youtube.com/embed/videoseries?list=PL_XQ6-8n0Pj6c7o-X-9oV4eM" title="魚池DOC影音專題" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube-nocookie.com/embed/fVBTS-hqiIA" title="AI虛擬主播：頭社活盆地特色三寶推廣" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
               <div class="video-card-body">
-                <h3 style="font-size:1.1rem; font-weight:700; color:var(--text-main); margin-bottom:0.4rem;">
-                  🤖 AI虛擬主播：頭社活盆地特色三寶推廣
-                </h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
-                  魚池DOC輔導在地農民，運用 AI 虛擬主播技術為絲瓜、金銀花、澳洲茶樹打造代言人，創造偏鄉數位轉型新模範。
-                </p>
+                <div>
+                  <h3 style="font-size:1.05rem; font-weight:700; color:var(--text-main); margin-bottom:0.35rem;">
+                    🤖 AI虛擬主播：頭社活盆地特色三寶推廣
+                  </h3>
+                  <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+                    魚池DOC輔導在地農民，運用 AI 虛擬主播技術為絲瓜、金銀花、澳洲茶樹打造代言人，創造偏鄉數位轉型新模範。
+                  </p>
+                </div>
+                <div class="video-action-bar">
+                  <span style="font-size:0.75rem; color:var(--text-muted);">魚池DOC 官方影音</span>
+                  <a href="https://www.youtube.com/watch?v=fVBTS-hqiIA" target="_blank" rel="noopener noreferrer" class="btn-watch-yt">
+                    ▶ 在 YouTube 開啟觀看
+                  </a>
+                </div>
               </div>
             </div>
 
-            <!-- 影音 2: 數位影音導覽系列 東光社區小旅行 -->
+            <!-- 影音 2: AI 圖像生成與創意商品設計 (4jbs05Izclw) -->
             <div class="video-card">
               <div class="video-frame-box">
-                <iframe src="https://www.youtube.com/embed/videoseries?list=PL_XQ6-8n0Pj6c7o-X-9oV4eM" title="東光社區小旅行" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube-nocookie.com/embed/4jbs05Izclw" title="AI圖像生成與創意商品設計" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
               <div class="video-card-body">
-                <h3 style="font-size:1.1rem; font-weight:700; color:var(--text-main); margin-bottom:0.4rem;">
-                  🌲 數位影音導覽系列：東光社區小旅行
-                </h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
-                  長輩掌鏡走訪貓頭鷹肖楠森林公園等在地秘境，透過空拍、手機攝影與剪輯，紀錄魚池鄉在地人文生態之美。
-                </p>
+                <div>
+                  <h3 style="font-size:1.05rem; font-weight:700; color:var(--text-main); margin-bottom:0.35rem;">
+                    🎨 AI圖像生成與特色商品設計課程
+                  </h3>
+                  <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+                    帶領學員使用生成式 AI 設計在地特色徽章與紅茶文創品，將科技學習實質轉化為生活與文創產能。
+                  </p>
+                </div>
+                <div class="video-action-bar">
+                  <span style="font-size:0.75rem; color:var(--text-muted);">魚池DOC 課程實錄</span>
+                  <a href="https://www.youtube.com/watch?v=4jbs05Izclw" target="_blank" rel="noopener noreferrer" class="btn-watch-yt">
+                    ▶ 在 YouTube 開啟觀看
+                  </a>
+                </div>
               </div>
             </div>
 
-            <!-- 影音 3: 教育部示範場域訪視與共學成果 -->
+            <!-- 影音 3: 魚池尖社區關懷據點樂齡數位陪伴 (xZ1v1GlE_gA) -->
             <div class="video-card">
               <div class="video-frame-box">
-                <iframe src="https://www.youtube.com/embed/videoseries?list=PL_XQ6-8n0Pj6c7o-X-9oV4eM" title="教育部訪視紀錄" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube-nocookie.com/embed/xZ1v1GlE_gA" title="魚池尖社區樂齡數位陪伴" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               </div>
               <div class="video-card-body">
-                <h3 style="font-size:1.1rem; font-weight:700; color:var(--text-main); margin-bottom:0.4rem;">
-                  🎓 教育部輔導團隊訪視南投示範場域紀錄
-                </h3>
-                <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
-                  教育部訪視委員蒞臨魚池數位中心，實地考察教學區、諮詢區與體驗區，肯定跨世代共學機制與在地深耕成果。
-                </p>
+                <div>
+                  <h3 style="font-size:1.05rem; font-weight:700; color:var(--text-main); margin-bottom:0.35rem;">
+                    👵 魚池尖社區關懷據點：樂齡數位陪伴
+                  </h3>
+                  <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+                    數位幫手走入魚池尖社區照顧關懷據點，耐心帶領長輩學習智慧手機功能與健康防詐騙知識，氣氛溫馨。
+                  </p>
+                </div>
+                <div class="video-action-bar">
+                  <span style="font-size:0.75rem; color:var(--text-muted);">據點推廣實錄</span>
+                  <a href="https://www.youtube.com/watch?v=xZ1v1GlE_gA" target="_blank" rel="noopener noreferrer" class="btn-watch-yt">
+                    ▶ 在 YouTube 開啟觀看
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 影音 4: 教育部訪視紀錄 (bZo1-77PxR0) -->
+            <div class="video-card">
+              <div class="video-frame-box">
+                <iframe src="https://www.youtube-nocookie.com/embed/bZo1-77PxR0" title="教育部訪視紀錄" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              </div>
+              <div class="video-card-body">
+                <div>
+                  <h3 style="font-size:1.05rem; font-weight:700; color:var(--text-main); margin-bottom:0.35rem;">
+                    🎓 教育部輔導團隊訪視南投示範場域紀錄
+                  </h3>
+                  <p style="font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+                    教育部訪視委員實地考察教學區、諮詢區與體驗區，肯定跨世代共學機制與在地深耕成果。
+                  </p>
+                </div>
+                <div class="video-action-bar">
+                  <span style="font-size:0.75rem; color:var(--text-muted);">訪視輔導紀錄</span>
+                  <a href="https://www.youtube.com/watch?v=bZo1-77PxR0" target="_blank" rel="noopener noreferrer" class="btn-watch-yt">
+                    ▶ 在 YouTube 開啟觀看
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- 相關新聞報導專區 (收集真實新聞報導) -->
+        <!-- 相關新聞報導專區 -->
         <div>
           <div class="section-header">
             <div>
@@ -700,13 +724,13 @@
 
 
     <!-- ========================================================
-         【C. 簡報模式 (Presentation Player + Annotation)】
+         【C. 簡報模式 (Presentation Player + Annotation + Fullscreen)】
          ======================================================== -->
     <section id="view-modeC" class="view-section">
 
-      <div class="deck-container">
+      <div class="deck-container" id="deckContainer">
         
-        <!-- 簡報投影視窗 (16:9 Canvas) -->
+        <!-- 簡報投影視窗 (16:9 Canvas，自動約束高度免滾動) -->
         <div class="deck-viewport-box" id="deckViewportBox">
           <!-- 頂部懸浮狀態條 -->
           <div class="deck-top-bar">
@@ -714,7 +738,12 @@
             <div class="deck-category-badge" id="deckCategoryBadge">開場簡報</div>
           </div>
 
-          <!-- 投影片圖像主體 -->
+          <!-- 全螢幕退出按鈕 (全螢幕時浮現) -->
+          <button class="fullscreen-exit-btn" id="btnExitFullscreen" title="退出全螢幕 (Esc)">
+            ✖ 退出全螢幕
+          </button>
+
+          <!-- 投影片圖像主體 (100% 完整適配絕不裁切) -->
           <img src="slides_img/slide_01.png" alt="投影片播放中" class="deck-slide-img" id="deckSlideImg">
 
           <!-- 繪圖與幾何標記透明畫布 (Canvas Overlay) -->
@@ -770,11 +799,15 @@
           </div>
 
           <div class="deck-controls-right">
+            <!-- 視窗畫面最適化 (免滾動完整看) -->
+            <button class="deck-btn" id="btnFitScreen" title="切換：畫面貼齊視窗（免滾動看全部畫面）">
+              📐 視窗最適
+            </button>
             <!-- 畫筆開關按鈕 -->
             <button class="deck-btn" id="toggleDrawingBtn" title="開啟 / 關閉螢幕塗鴉與標記工具">
               ✏️ 螢幕畫筆
             </button>
-            <button class="deck-btn active" id="toggleNotesBtn" title="顯示演講逐字稿與備忘錄 (快捷鍵 N)">
+            <button class="deck-btn" id="toggleNotesBtn" title="顯示演講逐字稿與備忘錄 (快捷鍵 N)">
               📝 講稿備忘
             </button>
             <button class="deck-btn" id="toggleThumbsBtn" title="展開所有投影片縮圖">
@@ -784,13 +817,13 @@
               ▶ 自動輪播
             </button>
             <button class="deck-btn" id="deckFullscreenBtn" title="全螢幕放映模式 (快捷鍵 F)">
-              ⛶ 全螢幕
+              ⛶ 進入全螢幕
             </button>
           </div>
         </div>
 
-        <!-- 講稿／備忘錄面板 (Speaker Notes Panel) -->
-        <div class="deck-notes-panel active" id="deckNotesPanel">
+        <!-- 講稿／備忘錄面板 (Speaker Notes Panel，預設摺疊以確保全畫面呈現) -->
+        <div class="deck-notes-panel" id="deckNotesPanel">
           <div class="deck-notes-header">
             <h3>🎙️ 簡報人隨身講稿與備忘重點（陳足女常務監事）</h3>
             <span style="font-size:0.85rem; color:var(--text-muted);">
